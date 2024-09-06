@@ -1,0 +1,38 @@
+{% extends 'adminportal/base.html' %}
+{% load static %}
+{% block body %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th><b>Player Name</b></th>
+                    <th><b>Gender</b></th>
+                    <th><b>Email</b></th>
+                    <th><b>Phone</b></th>
+                    <th><b>College</b></th>
+                    <th><b>Registered teams</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.user.first_name }}{{user.user.last_name}}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>{{ user.user.email }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.college }}</td>
+                    <td>
+                        {% for team in user.teamId.all %}
+                            {{ team.teamId }}
+                            {% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        
+    <br>
+    <a href="{% url 'adminportal:dashboard' %}">Go Back</a>
+    </div>
+    {% endblock %}

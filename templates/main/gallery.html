@@ -1,0 +1,30 @@
+
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+    <script src="https://kit.fontawesome.com/6688d75e89.js" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js" integrity="sha512-BdHyGtczsUoFcEma+MfXc71KJLv/cd+sUsUaYYf2mXpfG/PtBjNXsPo78+rxWjscxUYN2Qr2+DbeGGiJx81ifg==" crossorigin="anonymous"></script>
+</head>
+{% include 'navbar.html' %}
+
+
+<div class="about-page-wrapper row">
+  
+  <div class="heading"><h1 > G A L L E R Y</h1></div>
+  <div class="row container-fluid col-12 images">
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/volleyball.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/athletics.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/badminton.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/football.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/cricket.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/table-tennis.JPG' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/1.JPG' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/informals.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/prizes.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/2.jpg' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/3.JPG' %}" />
+    <img class="col-lg-4 col-md-6 col-sm-12 " src="{% static 'images/gallery/4.JPG' %}" />
+  </div>
+</div>
+<script src="{% static 'js/custom.js' %}"></script>
+{% include 'footer.html' %}

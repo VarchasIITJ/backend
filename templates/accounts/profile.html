@@ -1,0 +1,99 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block body %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.1/gsap.min.js"></script>
+
+  <style>
+    @media screen and (min-width: 300px) {
+      .pad{
+        padding: 0 0 30vh 0;
+      }
+
+    }
+     @media screen and (min-width: 400px) {
+      .pad{
+        padding: 10vh 4vh 12vh 4vh;
+      }
+
+    }
+    @media screen and (min-width: 700px) {
+      .pad{
+        padding: 5% 10% 10% 10%;
+      }
+      .button1{
+        padding:10vh;
+      }
+    }
+    .btn1{
+      border: none;
+      padding: 10px;
+      background-color: #256D85;
+      color: #DFF6FF;
+      font-weight:bold;
+      border-radius: 10px;
+    }
+    .btn1:hover{
+      background-color: #06283D;
+    }
+  </style>
+  {% csrf_token %}
+  {% include 'navbar.html'%}
+  <!-- Profile -->
+  <div class="cta" style=" min-height: 100vh; background-color: #06283D;color:white">
+    <div  style="" class="d-flex flex-xl-row flex-column align-items-center pad justify-content-start">
+
+
+      <div class="cta_content p-5" style="width: 100%;margin-top: 100px; background-color:#F0EABE ;border-radius: 20px">
+        <div class="section_title_container" style="">
+          <div class="section_subtitle px-3 py-2" style="font-weight: bold;font-size: 2rem;color:#F66B0E;">Profile</div>
+
+          <div class="section_title p-3"><h1 style="color:#256D85">{{userprofile.user.first_name}} {{userprofile.user.last_name}}</h1></div>
+          <div class="section_subtitle" style="padding-top: 3vh;padding-left: 5vh;color: #256D85"><h3>College : {{ userprofile.college }}</h3></div>
+          {% if userprofile.teamId != None %}<div class="section_subtitle" style="padding-top: 1vh;padding-left: 5vh;color: #256D85"><h3>Team : {{ userprofile.teamId }}</h3></div>{% endif %}
+          <div class="section_subtitle" style="padding-top: 1vh;padding-left: 5vh;color: #256D85"><h3 >Phone : {{ userprofile.phone }}</h3></div>
+        </div>
+      <div >
+      <div class="row" style="padding: 5vh">
+        <div style="padding: 3vh 6vh 4vh 4vh">
+          <a class="px-3" href="{% if userprofile.teamId != None %}{% url 'accounts:myTeam' %}{% else %}{% url 'accounts:joinTeam' %}{% endif %}">
+            <button type="button" class="btn1 ">
+           {% if userprofile.teamId != None %}VIEW TEAM{% else %}JOIN TEAM{% endif %}
+            </button>
+          </a>
+          
+        
+      </div>
+        {% if userprofile.teamId == None %}
+        <div style="padding: 0 4vh 2vh 4vh">
+         <button type="button" class="btn btn-secondary">
+             <a href="{% url 'registration:team' %}">CREATE A TEAM</a></div>
+        </button>
+
+       {% endif %}
+      </div>
+
+      </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+
+  </div>
+
+
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'styles/bootstrap-4.1.2/popper.js' %}"></script>
+  <script src="{% static 'styles/bootstrap-4.1.2/bootstrap.min.js' %}"></script>
+  <script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+  <script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+  <script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+  <script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+  <script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+  <script src="{% static 'plugins/OwlCarousel2-2.3.4/owl.carousel.js' %}"></script>
+  <script src="{% static 'plugins/easing/easing.js' %}"></script>
+  <script src="{% static 'plugins/progressbar/progressbar.min.js' %}"></script>
+  <script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+  </body>
+  </html>
+{% endblock %}

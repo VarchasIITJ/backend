@@ -1,0 +1,22 @@
+{% extends 'adminportal/base.html' %} {% load static %} {% block body %}
+<div class="row mb-6">
+	<div class="col-2 themed-grid-col"><b>Name</b></div>
+	<div class="col-3 themed-grid-col"><b>Email</b></div>
+	<div class="col-3 themed-grid-col"><b>College</b></div>
+	<div class="col-2 themed-grid-col"><b>Phone</b></div>
+	<div class="col-1 themed-grid-col"><b>FB</b></div>
+	<div class="col-1 themed-grid-col"><b>Code</b></div>
+</div>
+{% for ca in cas %}
+<div class="row mb-6">
+	<div class="col-2 themed-grid-col">{{ca}}</div>
+	<div class="col-3 themed-grid-col">{{ca.email}}</div>
+	<div class="col-3 themed-grid-col">{{ca.college}}</div>
+	<div class="col-2 themed-grid-col">{{ca.phone}}</div>
+	<div class="col-1 themed-grid-col"><a href="{{ca.fb_link}}">FB</a></div>
+	<div class="col-1 themed-grid-col">{{ca.referral_code}}</div>
+</div>
+{% endfor %}
+<br />
+<a href="{% url 'adminportal:dashboard' %}">Go Back</a>
+{% endblock %}

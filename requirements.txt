@@ -1,0 +1,17 @@
+Django==4.2.7
+whitenoise
+pillow
+flake8
+django-allauth
+django-ckeditor
+django-widget_tweaks
+xlwt
+django-rest_framework
+python-decouple
+django-cors-headers
+djangorestframework-simplejwt
+setuptools 
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+

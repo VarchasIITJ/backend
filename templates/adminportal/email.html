@@ -1,0 +1,95 @@
+{% extends 'adminportal/base.html' %} {% load static %} {% block body %}
+<style>
+	.email_container {
+		padding: 4vh;
+		align-content: center;
+		position: relative;
+		max-width: 650px;
+		elevation: above;
+		border: 1px solid #4e73df;
+		border-radius: 15px;
+		background: #4e73df;
+		color: white;
+	}
+
+	div.select-style select {
+		outline: none;
+		color: #4e73df;
+		border: none;
+		width: 50%;
+		padding: 15px;
+		margin-bottom: 2vh;
+		cursor: pointer;
+		background: white;
+	}
+
+	div.select-style select:hover {
+		background-color: #4e73df;
+		color: white;
+		border: 1px solid white;
+		padding: 15px 5px 15px 25px;
+	}
+
+	div.select-style textarea {
+		width: 100%;
+		float: left;
+		padding: 2vh;
+		margin-bottom: 2vh;
+	}
+
+	div.select-style select option {
+		background-color: #4e73df;
+		color: #fff;
+		width: 100%;
+		border-radius: 22px;
+
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		cursor: pointer;
+	}
+
+	div.select-style input {
+		margin-bottom: 2vh;
+	}
+
+	div.select-style select:focus > option:hover {
+		padding: 25px;
+		width: 270px;
+		z-index: 500;
+		box-shadow: 0 0 10px 100px #232020 inset;
+		color: #ff7315;
+	}
+
+	input.btn-hover-style:hover {
+		background: #4e73df;
+		color: white;
+		border-color: white;
+	}
+
+	input.btn-hover-style {
+		background: white;
+		color: #4e73df;
+		border-color: white;
+	}
+</style>
+<div
+	class="container-fluid justify-content-center"
+	style="padding: 50px 0; margin-left: -5vh;"
+>
+	<div
+		class="container-fluid select-style email_container justify-content-center"
+	>
+		<form method="post">
+			{% csrf_token %} {% for field in form %} {{ field.label }}:<br />
+			{{ field }}<br />
+			{% endfor %}
+			<input
+				class="btn btn-dark btn-hover-style"
+				type="submit"
+				value="Submit"
+			/>
+		</form>
+	</div>
+</div>
+{% endblock %}

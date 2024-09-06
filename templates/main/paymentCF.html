@@ -1,0 +1,25 @@
+<style>
+  .close{
+  position:absolute;
+  right:5vmin;
+  top:5vmin; 
+}
+.close button{
+    font-size:2rem;
+    color:red;
+    font-weight: 800;
+    background:none;
+    border:none;
+   text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+   transition: 0.3s linear;
+}
+.close button:hover{
+  text-shadow: none;
+  cursor:pointer;
+}
+</style>
+
+<div>
+  <a href="{% url 'main:home' %}"><div class="close"><button>X</button></div></a>
+  <iframe src="https://www.meraevents.com/ticketWidget?eventId=253254&ucode=organizer&wcode=9063CD-9063CD-333333-9063CD-&theme=1" width="100%" height="600px" frameborder="0px" ></iframe>
+</div>

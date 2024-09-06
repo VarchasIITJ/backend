@@ -1,0 +1,142 @@
+{% extends 'adminportal/base.html' %}
+{% load static %}
+{% block body %}
+    <style>
+        .email_container {
+            padding: 4vh;
+            align-content: center;
+            position: relative;
+            max-width: 850px;
+            elevation: above;
+            border: none;
+            border-radius: 15px;
+            background:#D5D5D5;
+            color: #808080; 
+        }
+
+        div.select-style select {
+            color: #4e73df;
+            width: 80%;
+            padding: 15px;
+            margin-bottom: 2vh;
+            cursor: pointer;
+            background: white;
+        }
+
+        div.select-style select:hover {
+            background-color: #4e73df;
+            color: white;
+            border: 1px solid white;
+            padding: 15px 5px 15px 25px;
+        }
+
+        div.select-style textarea {
+            width: 100%;
+            float: left;
+            padding: 2vh;
+            margin-bottom: 2vh;
+        }
+
+        div.select-style select option {
+            background-color: #4e73df;
+            color: #fff;
+            width: 100%;
+            border-radius: 22px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            cursor: pointer;
+        }
+
+        div.select-style input {
+            margin-bottom: 2vh;
+        }
+
+        input.btn-hover-style:hover {
+            background: #4e73df;
+            color: white;
+            border-color: white;
+        }
+
+        input.btn-hover-style {
+            background: white;
+            color: #4e73df;
+            border-color: white;
+        }
+
+        .errorlist{
+          background: #c58c85;
+          width: 80%;
+        }
+
+        body, html {
+         --color: #fff;
+         --bgColor: #d89;
+         --size: 1rem;
+         --border: calc(var(--size) * 0.125);
+         --borderRadius: calc(var(--size) * 0.5);
+         --labelSize: calc(var(--size) * 0.75);
+         --margin: calc(var(--size) * 0.25);
+         --marginLeft: calc(var(--size) + calc(var(--size) * 0.7));
+           font-family: helvetica, arial, sans-serif;
+        }
+
+        input,select,textarea{
+           background-size: var(--size) var(--size);
+           border: var(--border) solid var(--color);
+           border-radius: var(--borderRadius);
+           color: #222;
+           font-size: var(--size);
+           padding: var(--margin) var(--margin) var(--margin) var(--marginLeft);
+        }
+        #id_time {
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='20' cy='20' r='18.5' fill='none' stroke='%23222' stroke-width='3' /><path d='M20,4 20,8 M4,20 8,20 M36,20 32,20 M20,36 20,32' stroke='%23bbb' stroke-width='1' /><circle cx='20' cy='20' r='2' fill='%23222' stroke='%23222' stroke-width='2' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,4 20.5,4 21.5,24.5 Z' fill='%23222' style='transform:rotate(120deg); transform-origin: 50% 50%;' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,8.5 20.5,8.5 21.5,24.5 Z' style='transform:rotate(20deg); transform-origin: 50% 50%;' /></svg>");
+            background-position: var(--margin) 50%;
+            background-repeat: no-repeat;
+            transition: backgroundImage 0.25s;
+        }
+        #id_date {
+            background-image: url({% static 'images/calendar.png' %});
+            background-position: var(--margin) 50%;
+            background-repeat: no-repeat;
+            transition: backgroundImage 0.25s;
+        }
+
+    </style>
+    <div class="container-fluid  justify-content-center" style="padding: 50px 0;margin-left: -5vh">
+        <div class="container-fluid select-style email_container justify-content-center">
+           
+           {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+              {% endfor %}
+          </ul>
+          {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field.errors}}
+                    {{ field.label }}:<br> {{ field }}<br>
+                {% endfor %}
+                <input class="btn btn-dark btn-hover-style" type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+    
+
+<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<script>
+    $("h1.h3").text("ADD MATCH");
+    document.querySelector("#id_time").addEventListener("input", function(e) {
+    const reTime = /^([0-1][0-9]|2[0-3]):[0-5][0-9]$/;
+    const time = this.value;
+    if (reTime.exec(time)) {
+     const minute = Number(time.substring(3,5));
+     const hour = Number(time.substring(0,2)) % 12 + (minute / 60);
+     this.style.backgroundImage = `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='20' cy='20' r='18.5' fill='none' stroke='%23222' stroke-width='3' /><path d='M20,4 20,8 M4,20 8,20 M36,20 32,20 M20,36 20,32' stroke='%23bbb' stroke-width='1' /><circle cx='20' cy='20' r='2' fill='%23222' stroke='%23222' stroke-width='2' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,4 20.5,4 21.5,24.5 Z' fill='%23222' style='transform:rotate(${360 * minute / 60}deg); transform-origin: 50% 50%;' /></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M18.5,24.5 19.5,8.5 20.5,8.5 21.5,24.5 Z' style='transform:rotate(${360 * hour / 12}deg); transform-origin: 50% 50%;' /></svg>")`;
+    }
+});
+    </script>
+{% endblock %}

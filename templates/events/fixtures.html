@@ -1,0 +1,653 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard and Fixtures</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  background-image: url("{% static 'images/fixtures.png' %}");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #130245;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+
+.left {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.top {
+  width: 95%;
+  height: 8%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+h2 {
+  font-size: 2rem;
+}
+.live {
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  height: 70%;
+  background: #a700ff;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 10rem;
+  font-weight: 600;
+}
+.bottom {
+  width: 95%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+h3 {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.nav {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.bar {
+  width: 70%;
+  background: rgba(24, 130, 144, 0.5);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+.bar ul {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+.bar ul li {
+  color: white;
+  list-style-type: none;
+  display: inline;
+  margin: 0.5rem;
+  font-size: 0.7rem;
+}
+.bar ul li a {
+  text-decoration: none;
+  color: white;
+  transition: 0.2s linear;
+}
+.bar ul li a:hover {
+  opacity: 0.5;
+}
+.nav button {
+  width: 28%;
+  height: 100%;
+  background: rgba(0, 117, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  transition: 0.25s ease-in-out;
+}
+.nav button:hover {
+  background: rgba(255, 0, 179, 0.4);
+  cursor: pointer;
+}
+.tables {
+  height: 70%;
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.board {
+  /* margin-top: 1rem; */
+  width: 70%;
+  height: 90%;
+  box-shadow: 0 0 0.1vw 0.25vw #fff7f7, 0 0 0.15vw 0.3vw #d572e9,
+    0 0 4vw 0.25vw #6600ce, inset 0 0 1.5vw 0.25vw #6600ce,
+    inset 0 0 0.15vw 0.1vw #d572e9, inset 0 0 0.5vw 0.1vw #fff7f7;
+  display: grid;
+  grid-template-columns: 15% 38% 30% 17%;
+  overflow-y: scroll;
+}
+.board::-webkit-scrollbar {
+  width: 5px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  color: white;
+  padding: 0.5rem;
+}
+.col h4 {
+  margin: 0;
+  padding: 0;
+  font-weight: 300;
+  font-size: 0.8rem;
+}
+
+.rank {
+  width: 28%;
+  height: 95%;
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.card {
+  box-shadow: 0 0 0.1vw 0.25vw #fff7f7, 0 0 0.15vw 0.3vw #d572e9,
+    0 0 4vw 0.25vw #6600ce, inset 0 0 1.5vw 0.25vw #6600ce,
+    inset 0 0 0.15vw 0.1vw #d572e9, inset 0 0 0.5vw 0.1vw #fff7f7;
+  text-align: center;
+  padding: 0;
+  margin: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  color: white;
+}
+.right {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+.fix {
+  margin-bottom: 2rem;
+  width: 95%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0.1vw 0.25vw #fff7f7, 0 0 0.15vw 0.3vw #d572e9,
+    0 0 4vw 0.25vw #6600ce, inset 0 0 1.5vw 0.25vw #6600ce,
+    inset 0 0 0.15vw 0.1vw #d572e9, inset 0 0 0.5vw 0.1vw #fff7f7;
+  font-size: 1rem;
+}
+.t {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  font-size: 1rem;
+}
+.m {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  font-weight: 300;
+  font-size: 1rem;
+}
+.m h4 {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.m h4:first-child {
+  width: 25%;
+}
+.btm {
+  width: 100%;
+  max-height: 80%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  font-size: 1rem;
+}
+.btm::-webkit-scrollbar {
+  width: 5px;
+}
+#tables {
+  width: 100%;
+  height: 100%;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  text-align: center;
+}
+#tables td:first-child {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+}
+#tables td:last-child {
+  width: 80%;
+}
+.fxt {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.a {
+  width: 45%;
+  text-align: center;
+}
+.b {
+  width: 10%;
+}
+.a b {
+  color: chartreuse;
+}
+@media only screen and (max-width: 1040px) {
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }
+  .nav {
+    font-size: 0.8rem;
+  }
+  .fix {
+    width: 95%;
+  }
+}
+@media only screen and (max-width: 510px) {
+  .board {
+    width: 100%;
+    height: 70%;
+  }
+  .nav {
+    font-size: 0.6rem;
+  }
+  .nav button {
+    font-size: 0.7rem;
+  }
+  .rank {
+    height: 28%;
+    width: 100%;
+    grid-template-columns: auto auto auto;
+  }
+  .tables {
+    height: 70%;
+  }
+  .right {
+    height: 120vh;
+  }
+  .left {
+    height: 120vh;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .rank {
+    height: 20%;
+    width: 100%;
+  }
+  .tables {
+    height: 60%;
+  }
+  .left {
+    height: 90vh;
+  }
+  .right {
+    height: 70vh;
+  }
+}
+@media only screen and (max-width: 330px) {
+  .left {
+    flex-direction: column;
+    height: 190vh;
+  }
+  .live {
+    height: 30%;
+  }
+  .board {
+    width: 100%;
+    height: 70%;
+  }
+  .bar {
+    font-size: 0.2rem;
+    width: 100%;
+  }
+  .nav button {
+    font-size: 0.7rem;
+    width: 100%;
+    height: 20px;
+  }
+  .rank {
+    height: 28%;
+    width: 100%;
+    grid-template-columns: auto;
+  }
+  .tables {
+    height: 70%;
+  }
+  .right {
+    height: 120vh;
+  }
+  .l {
+    width: 20%;
+  }
+}
+
+.l,
+.r,
+.score {
+  width: 22%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 0.7rem;
+  text-align: center;
+}
+.l h4,
+.score h4 {
+  font-weight: 300;
+  padding: 0;
+  margin: 0;
+}
+.score {
+  margin-left: 3%;
+  width: 12%;
+}
+
+@media only screen and (max-width: 2040px) {
+  .left {
+    width: 100%;
+  }
+  .right {
+    width: 100%;
+  }
+  .nav {
+    font-size: 0.8rem;
+  }
+  .fix {
+    width: 95%;
+  }
+}
+@media only screen and (max-width: 510px) {
+  .board {
+    width: 100%;
+    height: 70%;
+  }
+  .nav {
+    font-size: 0.6rem;
+  }
+  .nav button {
+    font-size: 0.7rem;
+  }
+  .rank {
+    height: 28%;
+    width: 100%;
+    grid-template-columns: auto auto auto;
+  }
+  .tables {
+    height: 70%;
+  }
+  .right {
+    height: 120vh;
+  }
+  .left {
+    height: 120vh;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .rank {
+    height: 20%;
+    width: 100%;
+  }
+  .tables {
+    height: 60%;
+  }
+  .left {
+    height: 90vh;
+  }
+  .right {
+    height: 70vh;
+  }
+}
+@media only screen and (max-width: 330px) {
+  .left {
+    flex-direction: column;
+    height: 190vh;
+  }
+  .live {
+    height: 30%;
+  }
+  .board {
+    width: 100%;
+    height: 70%;
+  }
+  .bar {
+    font-size: 0.2rem;
+    width: 100%;
+  }
+  .nav button {
+    font-size: 0.7rem;
+    width: 100%;
+    height: 20px;
+  }
+  .rank {
+    height: 28%;
+    width: 100%;
+    grid-template-columns: auto;
+  }
+  .tables {
+    height: 70%;
+  }
+  .right {
+    height: 120vh;
+  }
+  .l {
+    width: 20%;
+  }
+}
+  .close{
+  position:absolute;
+  right:100vmin;
+  top:5vmin; 
+}
+.close button{
+    font-size:2rem;
+    color:white;
+    font-weight: 800;
+    background:none;
+    border:none;
+   text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+   transition: 0.3s linear;
+}
+.close button:hover{
+  text-shadow: none;
+  cursor:pointer;
+}
+  </style>
+  <body>
+    <div class="left">
+      <div class="top">
+        <h2>⚽{{sport}}</h2>
+        <div class="live"><b>◯</b>&nbsp; live</div>
+      </div>
+      <div class="bottom">
+        <h3>LEADERBOARD</h3>
+      </div>
+      <!-- <div class="nav">
+        <div class="bar">
+          <ul>
+            <li><a href="#">ALL MATCHES</a></li>
+            <li><a href="#">LIVE MATCHES</a></li>
+            <li><a href="#">FINISHED</a></li>
+            <li><a href="#">SCHEDULED</a></li>
+          </ul>
+        </div>
+        <button>Go to global leaderboard</button>
+      </div> -->
+      <div class="tables">
+        <div class="board">
+          <div class="col">
+            <h4><b>RANK</b></h4>
+            {% for team in leaderboard %}
+              <h4>{{forloop.counter}}</h4>
+            {% endfor %}
+            
+          </div>
+          <div class="col">
+            <h4><b>COLLEGE NAME</b></h4>
+            {% for team in leaderboard %}
+              <h4>{{team.college}}</h4>
+            {% endfor %}
+          </div>
+          <div class="col">
+            <h4><b>TEAM ID</b></h4>
+            {% for team in leaderboard %}
+              <h4>{{team.teamId}}</h4>
+            {% endfor %}
+          </div>
+          <div class="col">
+            <h4><b>Score</b></h4>
+            {% for team in leaderboard %}
+              <h4>{{team.score}}</h4>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="rank">
+          <div class="card">
+            🥇
+            <br />
+            NA <br />
+            NA
+          </div>
+          <div class="card">
+            🥈
+            <br />
+            NA <br />
+            NA
+          </div>
+          <div class="card">
+            🥉
+            <br />
+            NA <br />
+            NA
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="fix">
+        <div class="t">
+          <b>8th - 10th April</b>
+        </div>
+        <div class="m">
+          <h4><b>Timings</b></h4>
+          <h4><b>Fixtures</b></h4>>
+        </div>
+          <div class="btm">
+            {% for match in fixtures %}
+          <table id="tables">
+            <tr>
+              <td>{{match.match.date}} <br />{{match.match.time}} <br /></td>
+              <td>
+                <div class="fxt">
+                  <div class="a">
+                    {{match.match.team1.college}} <br />
+                    {#{match.match.team1.teamId}#} <br />
+                    <b>{#{match.score.0}#}</b>
+                    
+                  </div>
+                  <div class="b"><b>VS</b></div>
+                  <div class="a">
+                    {{match.match.team2.college}} <br />
+                    {#{ match.match.team2.teamId}#}  <br />
+                    <b>{#{match.score.1}#}</b>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+          {% endfor %}
+      </div>
+      <!-- <div class="venue">
+        <h4><b>Venue</b></h4>
+        
+        {% for match in fixtures %}
+        <h4>{{match.match.venue}}</h4>
+        {% endfor %}
+      </div> -->
+    </div>
+  </div>
+  </body>
+</html>

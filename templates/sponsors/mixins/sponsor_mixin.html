@@ -1,0 +1,20 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/sponsors.css' %}">
+    <script src="https://kit.fontawesome.com/6688d75e89.js" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js" integrity="sha512-BdHyGtczsUoFcEma+MfXc71KJLv/cd+sUsUaYYf2mXpfG/PtBjNXsPo78+rxWjscxUYN2Qr2+DbeGGiJx81ifg==" crossorigin="anonymous"></script>
+</head>
+
+{% for sponsortype in sponsortype_list %}
+
+<h1 class="sponsor-heading">{{sponsortype}}</h1>
+<hr class="heading-underline">
+<div class="sponsor-wrapper">
+    {% for sponsor in sponsortype.sponsor_set.all %}
+    <div class="sponsor-content">
+         <img src="{{ sponsor.logo.url }}"  /> 
+    </div>
+    {% endfor %}
+</div>
+
+{% endfor %}

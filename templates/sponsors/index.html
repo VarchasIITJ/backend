@@ -1,0 +1,31 @@
+
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/sponsors.css' %}">
+</head>
+    {% block body %}
+
+    {% include 'navbar.html' %}
+
+    <div class="sponsors-main-page">
+        {% include 'sponsors/mixins/sponsor_mixin.html' with sponsortype_list=sponsortype_list %}
+    </div>
+
+    <!-- <div class="coming-soon">
+        <h1>Coming Soon</h1>
+    </div> -->
+
+    {% include 'footer.html' %}
+
+    <!-- The cdn links for gsap-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js" integrity="sha512-gsEItzcNkWxfxHjr4BaEZAd9YuRWYjxnj7c/yukcZ0/nWehUb5TjJNyyv1ApCU2DFH/qgw+stFZHPOKnoQnIuQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>4
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/CSSRulePlugin.min.js" integrity="sha512-2+BGFUqT8mzxE2ifxQK7kcEhOeHaO5EOrUgRIUJ9+HoIw8zQHI+HvnVrgGjwW0qL5dpGv8ao2oZlBS7IvvCuhA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- linking the js -->
+    <script src="../../static/js/new/sponsors.js"></script>
+    </body>
+    </html>
+{% endblock %}

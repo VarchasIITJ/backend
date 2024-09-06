@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+  <!--===============================================================================================-->
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}"> {% endcomment %}
+  <!--===============================================================================================-->
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}"> {% endcomment %}
+  </head>
+  <body>
+    <div class="wrap">
+      <a href="{% url 'main:home' %}" >
+    <button class='home-btn rounded-circle py-2 px-3'>
+      Home
+    </button>
+  </a>
+      <div class="box m-auto align-content-center" style="height:35rem; width:34rem" >
+          
+          <form  method="post" id="login" autocomplete="off"  style="height:34.8rem; overflow-y: scroll;overflow-x: hidden;margin:auto !important;">
+          <h2>Esports Registrations</h2>
+            {% csrf_token %} {% for field in form %} {% if field.label == "State" or field.label == "Gender" or field.label == "Current year" or field.label == "Accommodation required" or field.label == "Sport" %}
+            <div class="inputBox"><input autocomplete="false" name="hidden" type="text" style="display:none;" />
+                    
+                        <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span>  {{ field }}
+                        
+                    </div>
+                    {% elif field.label == "Username" %} {# {% elif %}#} {# {{field.label }}{% if field.field.required %}*{% endif %}:{{ field}}<br /><br />#}
+                    {% elif field.label == "Lichess id" %}
+   
+                      <div class="inputBox" style="position:relative; ">
+                        
+                        <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}" 
+                        required autofocus/>
+                          <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span><i ></i> 
+                      </div>
+
+                    {% elif field.label == "Chesscom id" %}
+
+                      <div class="inputBox" style="position: relative; ">
+                        
+                        <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}" 
+                        required autofocus/>
+                        <span>Chess.com id :</span><i ></i>  
+                      </div>
+
+                    {% elif field.label == "Member 2 ingame id" or field.label == "Member 3 ingame id" or field.label == "Member 4 ingame id" or field.label == "Member 5 ingame id" or field.label == "Member 6 ingame id" or field.label == "Captain ingame id" %}
+                      
+                      <div class="inputBox" style="position: relative; ">
+                        <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}"
+                        required autofocus/>
+                        <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span><i ></i>  
+                      </div>
+                    
+                    {% elif field.label == "Member 2 peak rank" or field.label == "Member 3 peak rank" or field.label == "Member 4 peak rank" or field.label == "Member 5 peak rank" or field.label == "Member 6 peak rank" or field.label == "Captain peak rank" %}
+               
+                      <div class="inputBox" style="position: relative; ">
+                    
+                        <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}" 
+                        required autofocus/>
+                        <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span><i ></i>
+          
+                      </div>
+                   
+                    {% elif field.label == "Member 2 character id" or field.label == "Member 3 character id" or field.label == "Member 4 character id" or field.label == "Member 5 character id" or field.label == "Member 6 character id" or field.label == "Captain character id" %}
+                    
+                      <div class="inputBox" style="position: relative; ">
+                        <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}" 
+                        required autofocus/>
+                        <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span><i ></i>
+                    </div>
+                    {% elif field.label == "Member 2 ingame name" or field.label == "Member 3 ingame name" or field.label == "Member 4 ingame name" or field.label == "Member 5 ingame name" or field.label == "Member 6 ingame name" or field.label == "Captain ingame name" %}
+                      <div class="inputBox" style="position: relative; ">
+                       
+                        <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}"
+                        required autofocus/>
+                        <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span><i ></i>
+                    </div>
+                    {% elif field.field.required or field.label == "Member 6 name"  %}  
+                    <div class="inputBox" style="position: relative;">
+                        
+                        <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}" 
+                        required autofocus/>
+                        <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span><i ></i>
+                    </div>
+                    {% else %}
+                    <div class="inputBox" style="position: relative; ">
+                     
+                      <input class="input100" type="{{ field.field.widget.input_type }}" value="{% if field.value != NULL %}{{ field.value }}{% endif %}" name="{{ field.name }}" 
+                      required autofocus/>
+                      <span>{{ field.label }}{% if field.field.required %}*{% endif %} :</span><i ></i>
+                  </div>
+                    {% endif %} {% for error in field.errors %}
+                    <div class="alert alert-danger" style="color:red">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %} {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger" style="color:red">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %} {% endfor %} {% if messages %} {% for message in messages %} {% if 'register-success' in message.tags %}
+                    <div class="form-header green mb-4" style="color:green">{{ message }}</div>
+                    {% endif %} {% endfor %} {% endif %}
+                    <input type="submit" value="REGISTER" />
+                </form>
+          </form>
+    </div>
+  </body>
+</html>
+
+
+    <!--===============================================================================================-->
+    <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
+{% comment %} 
+<script>
+  $(".input100").focus(function() {
+    var height = $("body").css('height');
+    $("body").css('height', height);
+});
+</script> {% endcomment %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

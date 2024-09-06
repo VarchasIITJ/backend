@@ -1,0 +1,236 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/events-cards.css' %}">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+</head>
+
+
+
+<div class="events-wrapper">
+    <h1 class="events-heading">Events</h1>
+    <main class="cards-wrapper carousel owl-carousel">
+        <a href="{% url 'events:athletics' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/athletics.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Athletics</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:badminton' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/badminton.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Badminton</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:basketball' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/basketball-player.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>BasketBall</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:chess' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/chess.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Chess</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:cricket' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/cricket.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Cricket</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:football' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/football.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>FootBall</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:kabaddi' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/kabaddi.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Kabaddi</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="{% url 'events:weightlifting' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/weightlifting.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Weightlifting</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="{% url 'events:tennis' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/tennis.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Tennis</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        <a href="" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/informals.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>INFORMALS</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:TT' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/table-tennis.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Table Tennis</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <a href="{% url 'events:volleyball' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/volleyball.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Volleyball</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <!-- <a href="{% url 'events:valorant' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/valorant.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>VALORANT</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a> -->
+        <a href="{% url 'events:squash' %}" >
+            <div class = "card">
+                <div class = "imgBx">
+                    <img src="{% static 'images/squash.png' %}">
+                    
+                </div>
+                <div class = "content">
+                    <div class = "color">
+                    <h3>Squash</h3>
+                            
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+    </main>
+    
+</div>
+<script>
+ $(".carousel").owlCarousel({
+  margin: 20,
+  loop: true,
+  autoplay: true,
+  autoplayTimeout: 2000,
+  autoplayHoverPause: true,
+  responsive: {
+      0: { items: 1, nav: false },
+      600: { items: 2, nav: false },
+      1000: { items: 3, nav: false },
+  },
+});
+</script>

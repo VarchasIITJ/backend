@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block body %}
+
+<head>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+
+<!-- The home page -->
+<main>
+
+  <!-- The about section of the home page -->
+
+	{% include 'about.html'%}
+
+  {% include 'about-us.html'%}
+</main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/gsap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.2/ScrollTrigger.min.js"></script>
+
+</body>
+
+</html>
+{% endblock %}

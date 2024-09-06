@@ -1,0 +1,40 @@
+{% extends 'adminportal/base.html' %}
+{% load static %}
+{% block body %}
+        <form action="{% url 'adminportal:deteams' %}" method="post">
+            {% csrf_token %}
+            <select name="sport" id="">
+            {% for sport in sports%}
+                <option value="{{forloop.counter0}}" {% if sport_select == forloop.counter0 %}selected {% endif %}>{{sport}}</option>
+            {% endfor %}
+            </select>
+            <input type="submit" value="Filter" class="btn btn-primary" style="margin: 4px;">
+        </form>
+        <div class="row mb-12">
+            <div class="col-2 themed-grid-col"><b>Team Name</b></div>
+            <div class="col-2 themed-grid-col"><b>Sport</b></div>
+            <div class="col-2 themed-grid-col"><b>Captain</b></div>
+            <div class="col-2 themed-grid-col"><b>College</b></div>
+            <div class="col-1 themed-grid-col"><b>Captain no.</b></div>
+            <div class="col-1 themed-grid-col"><b>Team size</b></div>
+            <div class="col-2 themed-grid-col"><b>Date Created</b></div>
+        </div>
+        {% for team in teams%}
+        <div class="row mb-12">
+            <div class="col-2 themed-grid-col">{{team}}</div>
+            <div class="col-2 themed-grid-col">{{team.get_sport_display}}</div>
+            <div class="col-2 themed-grid-col">{{team.captian.user.first_name}}</div>
+            <div class="col-2 themed-grid-col">{{team.college}}</div>
+            <div class="col-1 themed-grid-col"> {{team.captian.phone}} </div>
+            <div class="col-1 themed-grid-col"> {% for key, value in members.items %} {% if team.teamId == key %} {{value}}
+                {% endif %}
+              {% endfor %}  </div>
+            <div class="col-2 themed-grid-col">{{team.captian.user.date_joined}}</div>
+        </div>
+        {% endfor %}
+    <br>
+    <a href="{% url 'adminportal:dashboard' %}">Go Back</a>
+    </div>
+    {% endblock %}
+
+    {# {% for user in users %} {% if user.teamId == team %} {{user.user.first_name}} <br> {% endif %} {% endfor %} #}

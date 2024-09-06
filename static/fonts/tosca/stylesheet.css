@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'tosca_zeroregular';
+    src:url('../../fonts/tosca/tosca___-webfont.woff2') format('woff2'),
+        url('../../fonts/tosca/tosca___-webfont.woff') format('woff');
+
+    font-weight: normal;
+    font-style: normal;
+}

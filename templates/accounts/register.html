@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+  
+  </head>
+  <body>
+    <a href="{% url 'main:home' %}" >
+    <button class='home-btn '>
+      Home
+    </button>
+  </a>
+    <div class="box m-auto align-content-center" style="height:31rem; width:30rem" >
+          
+
+          <form  method="post" id="login" autocomplete="off" style="height:30.8rem; overflow-y: scroll;overflow-x: hidden;margin:auto !important;" name="registeration">
+          <h2>Register</h2>
+            {% csrf_token %} 
+            {% for field in form %}
+            {% if field.label == "State" or field.label == "Gender" or field.label == "Current year" or field.label == "Accommodation required" %}
+            <div class="inputBox" ><input autocomplete="false" name="hidden" type="text" style="display:none;"/>
+                    <div style="padding-top: 1vh; padding-bottom: 2vh;color: white;">
+                        {{ field.label }}{% if field.field.required %}*{% endif %} : {{ field }}
+                    </div> 
+            </div>
+            {% elif field.label == "Undertaking Signed"%}
+                <div ><div style="color: white;">
+                  <br />
+                  <h5>Undertaking :</h5>
+                  <ul>
+                    <li>Indian  Institute of Technology, Jodhpur and its students are not responsible for any mishappening that may or may not occur during my visit to Varchas Winter 2022.</li>
+                    <li>I will not inflict any damage on any object present in the accomodation facilities.</li>
+                    <li>I will not indulge in any physical and/or verbal fights which may or may not happen during my visit to Varchas Winter 2022</li>
+                    <li>I will not administer or consume any type of alcholic and/or narcotic substances.</li>
+                    <li>I will behave in a respectful and responsible manner towards everyone during my visit to Varchas Winter 2022.</li>
+                    <li>I will not invite anyone to my particular accomodation alloted to me who is not documented for their stay in the same accomodation.</li>
+                    <li>I will bring original college identity proof along with a valid Aadhar Card, which is mandatory for all the participants. Along with this our captain has to get a signed statement from the college having our details.</li>
+                  </ul>
+                  If I am found breaking or not complying with any of the above mentioned guidelines, I am bound for fine by the authority of the organizing committee or any disciplinary action committee wants to take against me, Varchas Winter 2022.
+                  <br /><br />I have read and accept the terms{% if field.field.required %} *{% endif %} : </div>
+                <input  type="checkbox" id="agree"  name="{{ field.name }}"  onClick="enableRegister(this)" /><i ></i></div>
+
+            {% elif field.label == "Username"%}  {% else %}
+                <div class="inputBox" ><div style="color: white;">{{ field.label }}{% if field.field.required %}*{% endif %} : </div>
+                <input  type="{{ field.field.widget.input_type }}" name="{{ field.name }}" required autofocus/><i ></i></div>
+                
+            
+            {% endif %} {% for error in field.errors %}
+            <div class="alert alert-danger" style="color:red">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% for error in form.non_field_errors %}
+            <div class="alert alert-danger" style="color:red">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endfor %} {% if messages %} {% for message in messages %} {% if 'register-success' in message.tags %}
+            <div class="form-header green mb-4" style="color:green">{{ message }}</div>
+            {% endif %} {% endfor %} {% endif %}
+            {% csrf_token %}
+               <div class = "pt-3 align-centre"><button id="register" type="submit" name="submit" class="login-btn" disabled="disabled">
+                Register
+              </button></div>
+          </form> 
+    </div>
+
+
+<script>
+   function enableRegister(chkd){
+    var ddl = document.getElementById('register');
+    ddl.disabled = chkd.checked ? false : true;
+    if(!ddl.disabled){
+      ddl.focus();
+    }
+   }
+</script>
+
+
+    <!--===============================================================================================-->
+    <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!--===============================================================================================-->
+    <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+    <!--===============================================================================================-->
+
+    <!--===============================================================================================-->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

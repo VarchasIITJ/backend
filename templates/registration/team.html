@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Registration</title>
+ <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+ 
+</head>
+
+<body>
+  <a href="{% url 'main:home' %}" >
+    <button class='home-btn rounded-circle py-2 px-3'>
+      Home
+    </button>
+  </a>
+    <div class="box m-auto">
+      
+          <form action="" method="post" autocomplete="off">
+            <h2>Create Team</h2>
+            {% csrf_token %}
+            {% if form.errors %}
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% for field in form %}
+            {% if field.label != "Sport" %}
+            <div class="inputBox"> <div style="color: white; padding-bottom:0.8rem">{{ field.label }}:</div>
+              <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" required >
+              <span >Enter College</span><i></i>
+            </div>
+            {% elif field.label == "Sport" %}
+            <span style="color: white;padding-top:1rem;padding-bottom:1rem;">{{ field.label }}:</span>
+            {{field}}
+
+            {% endif %}
+            {% endfor %}
+
+            {% if messages %}
+            {% for message in messages %}
+            {% if 'register-success' in message.tags %}
+            <div class="form-header green mb-4">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <div class="pt-4">
+              <button class="login-btn px-4 py-2 text-black-50">
+                Register
+              </button>
+            </div>
+          </form>
+
+    </div>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

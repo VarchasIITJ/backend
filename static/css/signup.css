@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: "Roboto Mono", monospace;
+  color: white;
+  font-weight: 100;
+  overscroll-behavior: contain;
+  background-color: #15073e;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border: 10px solid black;
+  background: #000000;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 5px;
+}
+.wrap {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.main {
+  width: 50vw;
+  height: 100vh;
+  background-image: url("../images/arcade.png");
+  background-color: #15073e;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close {
+  position: absolute;
+  right: 5vmin;
+  top: 5vmin;
+}
+.close button {
+  font-size: 2rem;
+  color: white;
+  font-weight: 800;
+  background: none;
+  border: none;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073,
+    0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  transition: 0.3s linear;
+}
+.close button:hover {
+  text-shadow: none;
+  cursor: pointer;
+}
+form {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+  overflow-y: scroll;
+}
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  border: 2px solid white;
+  background: none;
+  color: white;
+}
+input[type="submit"] {
+  background-color: purple;
+  border: none;
+  text-decoration: none;
+  color: white;
+  padding: 10px 10px;
+  margin: 10px 10px;
+  cursor: pointer;
+}
+label {
+  text-transform: lowercase;
+}
+.bg {
+  height: 100vh;
+  width: 25vw;
+  background: linear-gradient(
+    180deg,
+    #6b048b 0%,
+    #56206e 23.14%,
+    #3e3a6c 49.7%,
+    #451f84 74.7%,
+    #5504b1 87.2%,
+    #621892 100%
+  );
+}
+@media screen and (max-width: 1000px) {
+  .main {
+    width: 100vw;
+  }
+  /* .close{
+    position:absolute;
+    right:10vmin;
+    top:45vmin; 
+  } */
+}
+@media screen and (max-width: 915px) {
+  .main {
+    height: 80vh;
+  }
+}
+@media screen and (max-width: 560px) {
+  .main {
+    width: 100vw;
+    height: 90vh;
+  }
+  form {
+    width: 35vw;
+    padding: 0;
+  }
+}
+@media screen and (max-width: 515px) {
+  .main {
+    height: 80vh;
+  }
+  form {
+    height: 25vh;
+    width: 60%;
+    margin: auto;
+  }
+}
+@media screen and (max-width: 460px) {
+  .main {
+    height: 55vh;
+    margin: auto;
+  }
+}
+@media screen and (max-width: 396px) {
+  .main {
+    height: 55vh;
+  }
+  input[type="text"],
+  input[type="password"],
+  input[type="email"],
+  select {
+    display: block;
+    width: 80%;
+  }
+}

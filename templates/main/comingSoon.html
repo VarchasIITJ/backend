@@ -1,0 +1,128 @@
+{% load static %}
+
+<head>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			color: white;
+			background-color: #000;
+		}
+
+		@media screen and (min-width: 300px) {
+			img {
+				height: auto;
+				width: 100%;
+			}
+		}
+
+		@media screen and (min-width: 750px) {
+			img {
+				width: auto;
+				height: 100%;
+			}
+		}
+
+		.menu_door {
+			position: absolute;
+			top: 5%;
+			left: 100%;
+			height: 90%;
+			width: 90%;
+			background: rgba(20, 41, 63, 0.8);
+		}
+
+		div {
+			justify-content: center;
+			align-content: center;
+		}
+
+		.text1 {
+			text-align: center;
+			font-size: 10vh;
+			visibility: hidden;
+			font-family: "Roboto", "Lucida Grande", "DejaVu Sans",
+				"Bitstream Vera Sans", Verdana, Arial, sans-serif;
+		}
+
+		.text2 {
+			text-align: center;
+			font-size: 6vh;
+			visibility: hidden;
+			font-family: "Roboto", "Lucida Grande", "DejaVu Sans",
+				"Bitstream Vera Sans", Verdana, Arial, sans-serif;
+		}
+
+		.p1 {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.hidden1 {
+			opacity: 0;
+			visibility: hidden;
+		}
+	</style>
+	<title>Coming Soon</title>
+</head>
+
+<body onload="initMenu1()">
+	<img src="{% static 'images/209588.gif' %}" alt="" />
+
+	<div class="row menu_door" style="padding: 0vh;">
+		<div class="col hidden1 text1">
+			<p class="p1" style="margin: 2vh 0 0 0;">Coming Soon!</p>
+		</div>
+		<br />
+		<div class="col hidden1 text2" style="margin: 25vh 0 0 0;">
+			<p class="p1" style="margin: 0 0 0 0;">Hold your Horses.</p>
+		</div>
+	</div>
+</body>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap-4.1.2/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap-4.1.2/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+<script src="{% static 'plugins/OwlCarousel2-2.3.4/owl.carousel.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+<script src="{% static 'plugins/progressbar/progressbar.min.js' %}"></script>
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script>
+	function initMenu1() {
+		var menu = $(".text1")
+		var menu2 = $(".text2")
+		var door = $(".menu_door")
+		var txt = $(".p1")
+
+		// Open menu
+		TweenMax.to(menu, 0, {
+			visibility: "visible",
+			opacity: 1,
+		}) // Open menu
+		TweenMax.to(menu2, 0, {
+			visibility: "visible",
+			opacity: 1,
+		})
+		TweenMax.to(txt, 0.4, {
+			visibility: "visible",
+			delay: 0.4,
+			opacity: 1,
+		})
+		TweenMax.to(door, 1, {
+			left: "5%",
+			top: "5%",
+			marginLeft: 0,
+			ease: Power3.easeOut,
+		})
+	}
+</script>

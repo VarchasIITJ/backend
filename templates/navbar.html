@@ -1,0 +1,68 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <script src="https://kit.fontawesome.com/6688d75e89.js" crossorigin="anonymous"></script>
+</head>
+
+
+<nav class="home-nav container-fluid ">
+    <div class="main-logo"><img src="{% static 'images/logo.png' %}" /></div>
+    <input type="checkbox" name="" id="clicked">
+    <label for="clicked" class="nav-btn">
+        <i class="fa-solid fa-bars"></i>
+    </label>
+    <ul class="nav-list">
+        <li><a href="{% url 'main:home' %}">Home</a></li>
+        <li><a href="{% url 'main:gallery' %}">Gallery</a></li>
+        <li><a href="{% url 'sponsor:index' %}">Sponsors</a></li>
+        <li><a href="{% url 'main:OurTeam' %}">Core Team</a></li>
+        {% for navbaroption in navbaroptions %}
+                    <li><a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false"
+                           style="color: white    ">{{ navbaroption.title }}</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        {% for suboption in navbaroption.sub_options.all %}
+                                            <a class="dropdown-item"
+                                               style="color: black; font-family: 'Poppins', sans-serif;"
+                                               href="{{ suboption.get_absolute_url }}">{{ suboption.title }}</a>
+                                        {% endfor %}
+                                    </div>
+                    </li> 
+        {% endfor %}
+                            {% if user.is_authenticated %}
+                            
+                                {% if userprofile.teamId != None %}
+                                    {% if page == "team" %}
+                                        <li class="active">{% else %}
+                                        <li>{% endif %}
+                                <a href="{% url 'accounts:myTeam' %}">Team Details</a></li>
+                                {% if userprofile.user_type == None %}
+                                <li><a href="{% url 'accounts:leaveTeam' %}"
+                                    >Leave
+                                 Team</a></li>{% endif %}
+                                 <li class="topbar-styles"><a href="{% url 'main:payment' %}">Payment</a></li>
+                                
+                                {% else %}
+                                    <li><a href="{% url 'accounts:joinTeam' %}">Join
+                                        Team</a></li>
+                                    <li><a href="{% url 'registration:team' %}"
+                                           >Create
+                                        Team</a></li>
+                                {% endif %}
+                                {% if page == "profile" %}
+                                    <li class="active">{% else %}
+                                    <li>{% endif %}
+                            <a href="{% url 'accounts:profile' %}">Profile</a></li>
+                                <!-- {% if page == "team" %}
+                                {% if userprofile.user_type == None %}
+                                    <li><a href="{% url 'accounts:leaveTeam' %}"
+                                           >Leave
+                                        Team</a></li>{% endif %}{% endif %} -->
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else %} 
+                                <li><a href="{% url 'login' %}">Login</a></li>
+                                <!-- <li><a href="{% url 'accounts:EsportsRegister' %}">Esports Registrations</a></li> -->
+                            {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,24 @@
+
+            {% if brief_list %}
+            <div class="section_subtitle">IN BRIEF</div>
+            {% endif %}
+          </div>
+
+          <!-- Classes Slider -->
+          <div class="classes_slider_container">
+            <div class="owl-carousel owl-theme classes_slider">
+
+                <!-- Slide -->
+                {% for brief in brief_list%}
+                <div>
+                    <div class="classes_slide_wrap">
+                      <div class="text-center">
+                      <div class="classes_title"><h3>{{brief.title}}</h3></div>
+                        <div class="classes_text">
+                        <p>{{brief.description}}</p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                {% endfor %}
+

@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Registration</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <!--===============================================================================================-->
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}"> {% endcomment %}
+  <!--===============================================================================================-->
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}"> {% endcomment %}
+  <!--===============================================================================================-->
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}"> {% endcomment %}
+  <!--===============================================================================================-->
+  {% comment %} <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}"> {% endcomment %}
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+  
+</head>
+
+<body>
+<a href="{% url 'main:home' %}" >
+    <button class='home-btn rounded-circle py-2 px-3'>
+      Home
+    </button>
+  </a>
+  <div class="wrap m-auto">
+ 
+    <div class="main">
+      <div class="box m-auto my-auto">
+      <h2>Join Team</h2>
+          <form class="form1" style="" action="{% url 'accounts:joinTeam' %}" method="post">
+
+              <span style="color: white;font-size: 3rem; margin-bottom:0px">Join Team</span>
+              {% if form.errors %} {% for field in form %} {% for error in field.errors %}
+            
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endfor %} {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %} {% endif %} {% csrf_token %}
+              {% csrf_token %}
+                <div class="inputBox"><input type="text" name="teamId"  required autofocus />
+                <span >Enter the Team ID</span><i></i>
+                
+              </div >
+              <div class = "pt-3 align-centre"><button type="submit" name="submit" class="login-btn">
+                Submit
+              </button></div>
+              <p style="color:white">*Note: You have copy the exact Team ID for example "VA-BAS-MAT2", "VABASMAT2" is invalid format.</p>
+          </form>
+        
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

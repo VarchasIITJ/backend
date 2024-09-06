@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.top-portion {
+  height: auto;
+  display: flex;
+  padding: 20px;
+  justify-content: space-around;
+}
+
+.top-portion .footer-top-left-section,
+.top-portion .footer-top-right-section {
+  flex-basis: 35%;
+}
+
+.footer-top-right-section img {
+  width: 80%;
+}
+
+.left-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.heading-wrapper {
+  border-left: 10px solid #8fe3cf;
+}
+
+.left-content h2,
+.left-content h6 {
+  color: white;
+  padding-left: 20px;
+}
+
+.left-content h2 {
+  font-size: 60px;
+}
+
+.left-content h6 {
+  font-size: 20px;
+}
+
+.footer-container {
+  padding: 40px 0px;
+  font-family: "Roboto Condensed", sans-serif;
+  background-color: #011b39;
+}
+
+.footer-main {
+  display: flex;
+  height: auto;
+  justify-content: space-evenly;
+}
+
+.footer-main .column {
+  flex-basis: 25%;
+}
+
+.footer-main .column p {
+  color: white;
+  line-height: 1.3;
+}
+
+.registration-and-enquiry {
+  padding: 9px 0px;
+}
+
+.footer-main .column ul li {
+  list-style: none;
+  color: white;
+  padding-left: 15px;
+}
+
+a:link {
+  color: white;
+  text-decoration: none;
+}
+
+a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #8fe3cf;
+  text-decoration: none;
+}
+
+a:active {
+  color: white;
+  text-decoration: none;
+}
+.quick-links ul {
+  padding-left: 0px;
+  display: flex;
+}
+
+.quick-links li {
+  padding: 0px 10px;
+  transition: 0.7s;
+}
+
+.quick-links li:hover {
+  color: #8fe3cf !important;
+  cursor: pointer;
+}
+
+hr {
+  width: 60vw;
+  background-color: #8fe3cf;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.copyright {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.copyright .heading {
+  margin: 0;
+  font-size: 40px;
+  font-family: "Roboto Condensed", sans-serif;
+}
+
+.copyright p {
+  color: white;
+}
+
+.socials ul {
+  display: flex;
+  margin: 0;
+  padding: 10px 0px;
+}
+
+.socials ul li {
+  list-style: none;
+  padding: 0px 10px;
+}
+
+.fa-brands,
+.fa.fa-envelope {
+  size: 30px;
+  color: white !important;
+}
+
+.fa-2x {
+  color: white;
+}
+
+@media screen and (min-width: 350px) and (max-width: 800px) {
+  .footer-main {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 0px 5%;
+  }
+
+  .footer-main .column {
+    padding: 5% 0px;
+  }
+
+  .footer-main p {
+    padding-right: 50%;
+  }
+
+  .copyright {
+    padding: 0px 9%;
+  }
+
+  .top-portion {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-top-right-section img {
+    width: 100%;
+  }
+
+  .left-content h2 {
+    font-size: 40px;
+  }
+
+  .left-content h6 {
+    font-size: 10px;
+  }
+}

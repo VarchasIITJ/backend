@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+}
+section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url("../images/payment.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+section .box1,
+section .box2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: url("../images/payment.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.box1 {
+  filter: blur(10px);
+}
+.box2 {
+  background: none;
+  clip-path: circle(150px at var(--x) var(--y));
+}
+.main {
+  align-self: flex-start;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 15vh;
+}
+.main h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 300;
+  transform: traslate(0, 0);
+}
+.main h3 {
+  color: #fff;
+  font-size: 4rem;
+  font-weight: bold;
+  transform: traslate(0, 0);
+  font-family: "Quantico";
+  text-align: center;
+}
+button {
+  background: linear-gradient(
+    96.27deg,
+    rgba(255, 255, 255, 0.237) 8.27%,
+    rgba(255, 255, 255, 0) 107.63%
+  );
+  box-shadow: 10px 10px 20px #001d52;
+  border-radius: 100px;
+  border: none;
+  width: 10rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  transform: traslate(0, 0);
+}
+button:hover {
+  cursor: pointer;
+  box-shadow: none;
+}
+.circle {
+  position: absolute;
+  top: -150px;
+  left: -150px;
+  width: 300px;
+  height: 300px;
+  border: 0.1px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 45px 120px rgba(0, 0, 0, 1);
+  transform: translate(var(--x), var(--y));
+}
+.close {
+  position: absolute;
+  right: 5vmin;
+  top: 5vmin;
+}
+.close button {
+  font-size: 2rem;
+  color: white;
+  font-weight: 800;
+  background: none;
+  border: none;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073,
+    0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  transition: 0.3s linear;
+}
+.close button:hover {
+  text-shadow: none;
+  cursor: pointer;
+}

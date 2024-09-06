@@ -1,0 +1,407 @@
+{% load static %}
+<head>
+  <link rel="stylesheet" href="{% static 'css/core-team-cards.css' %}" />
+
+  <link
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    rel="stylesheet"
+  />
+
+  <script
+    src="https://kit.fontawesome.com/6688d75e89.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
+
+<main class="core-team-container">
+  <h1 class="core-headings">Vice President - Board of Student Sports</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+    {% if member.get_position_display == 'Vice President - Board of Student Sports'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Festival Chiefs</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+    {% if member.get_position_display == 'Festival Chief'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Public Relations</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+    {% if member.get_position_display == 'Public Relations and Hospitality'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Marketing</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Marketing'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Transport</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Transport'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Sport Coordinator</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Sport Coordinator'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Informals</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Informals'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Resources</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Resources'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Publicity and Media</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Publicity and Media'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="url({{member.facebook}})"
+                    ><i class="fa fa-facebook"></i
+                  ></a>
+                </li>
+
+                <li>
+                  <a href="url({{member.insta}})"
+                    ><i class="fa fa-instagram"></i
+                  ></a>
+                </li>
+
+                <li>
+                  <a href="url({{member.linkedIn}})"
+                    ><i class="fa fa-linkedin"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Creativity</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Creativity'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+
+  <h1 class="core-headings">Web and APP</h1>
+
+  <div class="container">
+    {% for member in our_team.all %}
+      {% if member.get_position_display == 'Web and APP'%}
+      <div class="card">
+        <div class="imgBx">
+          <img src="{{member.picture}}" />
+        </div>
+        <div class="contentBx">
+          <div class="content">
+            <h3><br /><br /><br />{{ member }}</h3>
+
+            <div class="social-menu">
+              <ul>
+                <li>
+                  <a href="{{member.facebook}}"><i class="fa fa-facebook"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.insta}}"><i class="fa fa-instagram"></i></a>
+                </li>
+
+                <li>
+                  <a href="{{member.linkedIn}}"><i class="fa fa-linkedin"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {%endif%}
+    {% endfor %}
+  </div>
+</main>

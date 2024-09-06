@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap");
+.about-page-wrapper {
+  height: 100vh;
+  display: flex;
+  background-image: linear-gradient(#256d85, #011b39);
+  justify-content: space-around;
+}
+
+.images {
+  padding-top: 120px;
+  overflow-y: scroll;
+  padding-left: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  padding-top: 120px;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.763),
+    rgba(255, 255, 255, 0.303) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+  background-size: 4px 4px;
+  width: 55vw;
+}
+
+h1 {
+  margin-top: 40vh;
+  color: rgb(244, 244, 244);
+  font-family: "Ubuntu", sans-serif;
+}
+
+.images img {
+  height: 260px !important;
+  width: 360px !important;
+  padding: 20px !important;
+  border-radius: 30px !important;
+  backdrop-filter: blur(2px) !important;
+}
+
+.images img :hover {
+  padding: 1px !important;
+}
+
+.images::-webkit-scrollbar {
+  width: 12px;
+}
+
+.images::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}

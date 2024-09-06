@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block header %}
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Varchas is the annual sports festival of IIT Jodhpur, varchas  has grown to become the largest and one of the most awaited sports festival of north west India.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property='og:site_name' content = 'Varchas'/>
+    <meta property='og:title' content = 'Varchas22-The annual sports fest of IIT Jodhpur'/>
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/ios-filled/344/sports-mode.png">
+    <title>Varchas</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap-4.1.2/bootstrap.min.css' %}">
+     
+        <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet"
+              type="text/css">
+       
+        
+         <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css'%}" />
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/animate.css' %}">
+    <link
+      href="http://fonts.cdnfonts.com/css/post-no-bills-jaffna"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    {% endblock %}
+  </head>
+  <body>
+
+    
+        {% block body %}
+    
+        {% endblock %}
+
+  </body>
+</html>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'styles/bootstrap-4.1.2/popper.js' %}"></script>
+<script src="{% static 'styles/bootstrap-4.1.2/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+<script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+<script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+<script src="{% static 'plugins/easing/easing.js' %}"></script>
+
+<script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>

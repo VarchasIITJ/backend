@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+  
+  <style>
+    input::placeholder{
+      color:black
+    }
+  </style>
+  <!--===============================================================================================-->
+</head>
+
+<body>
+  <a href="{% url 'main:home' %}" >
+    <button class='home-btn '>
+      Home
+    </button>
+  </a>
+  <div class="box m-auto">
+          
+          <form action="" method="post" autocomplete="off" class="m-auto p-auto">
+          <h2>Sign in</h2>
+            {% csrf_token %}
+            {% if form.errors %}
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+              <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% for field in form %}
+            <div class="wrap-input100 validate-input">
+              <div class = "inputBox">
+              {% if field.label == "Username" %}
+              <input  type="{{ field.field.widget.input_type }}" name="{{ field.name }}" 
+                required autofocus/><span>Username</span><i></i>
+              </div>
+              <div class = "inputBox">
+              {% else %}
+              <input id="password-field" type="{{ field.field.widget.input_type }}" name="{{ field.name }}"
+                 required autofocus/><span>Password</span><i></i>
+              </div>
+            
+              
+              {% endif %}
+              <span class="focus-input100"></span>
+              {% if field.name == "password" %}
+              <span id="pwfield" toggle="#password-field"
+                >
+                {% endif %}
+            
+            </div>
+            {% endfor %}
+
+            {% if messages %}
+            {% for message in messages %}
+            {% if 'register-success' in message.tags %}
+            <div class="form-header green mb-4">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+
+            <div class="pt-3">
+              <button class="login-btn rounded btn-secondary py-1 px-5">
+                Login
+              </button>
+            </div>
+
+            <div class="links" >
+              <a  style="font-weight: bolder;" href="{% url 'password_reset' %}">
+                Forgot Password?
+              </a>
+            </div>
+              <div class = "links">
+              </div>
+            
+          </form>
+
+        </div>
+        
+      </div>
+    </div>  
+  </div>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

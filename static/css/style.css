@@ -1,0 +1,459 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: "Roboto Mono", monospace;
+  color: white;
+  font-weight: 100;
+  overscroll-behavior: contain;
+}
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #130245;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  perspective: 15vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+  /* background: linear-gradient(0deg, #df319c 50%, #130245 100%); */
+}
+.navbar {
+  background: #130245;
+  width: 95vw;
+  padding-left: 2vw;
+  padding-right: 3vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 5vmin;
+  flex-wrap: wrap;
+}
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo img {
+  height: 2.5rem;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 30vw;
+  flex-wrap: wrap;
+}
+.menu h5 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.out {
+  overflow: hidden;
+  width: 230vw;
+  height: 60%;
+  position: absolute;
+  background: linear-gradient(0deg, #15073e 35%, #df319c 98%);
+  transform-style: preserve-3d;
+  transform: rotateX(45deg);
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+}
+.in {
+  border: 1px solid #ff518b;
+  border-top: 0.1px solid #ff518b;
+  border-bottom: 0.1px solid #ff518b;
+  transform: translateY(-15vh);
+  animation: move 1s infinite linear;
+}
+
+@keyframes move {
+  from {
+    transform: translateY(-15vh);
+  }
+  to {
+    transform: translateY(-5vh);
+  }
+}
+.image {
+  align-self: center;
+  justify-self: center;
+  position: absolute;
+  justify-self: flex-start;
+  width: 100vw;
+}
+.image img {
+  width: 100vw;
+}
+.sunout {
+  margin-bottom: 8rem;
+  z-index: -1;
+  align-self: center;
+  justify-self: center;
+  height: 30vw;
+  width: 30vw;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffc600 0%, #ff00de 100%);
+  overflow: hidden;
+  display: grid;
+}
+.sunin {
+  z-index: -1;
+  margin-top: 1.5vh;
+  height: 0.7vh;
+  background: #901c9b;
+  animation: sun 1.5s infinite linear;
+}
+@keyframes sun {
+  from {
+    transform: translateY(-15vh);
+  }
+  to {
+    transform: translateY(-0.5vh);
+  }
+}
+.title {
+  position: absolute;
+  z-index: 1000;
+  /* height: 100px; */
+  align-self: center;
+  color: white;
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: space-around;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  margin-top: 170px;
+}
+.title h1 {
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Post No Bills Jaffna SemiBold";
+}
+.title h3 {
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  font-size: 2.1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 300;
+}
+/* .about {
+  display: flex;
+
+  background-color: #15073e;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+} */
+
+.right-section,
+.left-section {
+  border: 1px solid white;
+}
+
+.top-section {
+  display: flex;
+  flex-direction: row;
+}
+.about h1 {
+  font-size: 3rem;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+/* .about p {
+  width: 70vw;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  color: red;
+} */
+#second {
+  font-size: 1.5rem;
+  color: #00f0ff;
+  width: 60vw;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  flex-wrap: wrap;
+}
+.buttons button {
+  border: none;
+  background-image: url("./neon-btn.png");
+  background-color: transparent;
+  height: 5rem;
+  width: 20rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
+  font-family: Roboto Mono, monospace;
+  transition: 0.3s linear;
+}
+.buttons button:hover {
+  transform: scale(0.9);
+  background: #9000ff;
+  background-image: none;
+  height: 4rem;
+  width: 14rem;
+}
+.about svg {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.cards {
+  background: linear-gradient(180deg, #0c0131 0%, #030212 100%);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100vw;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+  overflow-x: hidden;
+}
+.card {
+  background-image: url("./neon-card.png");
+  background-color: transparent;
+  height: 22rem;
+  width: 20rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 0.3s linear;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0c0131;
+  text-align: center;
+  text-shadow: 0 0 2.5px #fff, 0 0 4px #fff, 0 0 4px #02eeff, 0 0 5px #009de6,
+    0 0 7.5px #00e6e6;
+}
+.card img {
+  width: 12rem;
+}
+.card:hover {
+  background-image: none;
+  background-color: transparent;
+  border: 2px solid white;
+  height: 18rem;
+  width: 18rem;
+}
+.reg {
+  height: 100vh;
+  background-image: url("./bg2.png");
+  background-color: #15073e;
+  width: 100vw;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow-x: hidden;
+}
+.reg h1 {
+  margin-top: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 400;
+  font-size: 2rem;
+}
+.list {
+  margin-top: 2rem;
+  margin-bottom: 5rem;
+  background-image: url("./reg-border.png");
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-size: 60% 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.reg ul {
+  width: 50%;
+}
+.reg ul li {
+  font-weight: 300;
+  font-size: 1.2rem;
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 760px) {
+  .about p,
+  #second {
+    font-size: 0.8rem;
+    width: 90%;
+  }
+  .wrapper {
+    height: 50vh;
+  }
+  .out {
+    grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
+  }
+  .in {
+    transform: translateY(-5vh);
+    animation: move 1s linear infinite;
+  }
+
+  @keyframes move {
+    from {
+      transform: translateY(-5vh);
+    }
+    to {
+      transform: translateY(-1vh);
+    }
+  }
+  .reg ul {
+    width: 83%;
+  }
+  .list {
+    background-size: 97% 100%;
+  }
+  .sunin {
+    margin-top: 0.5vh;
+    animation: sun 3s linear infinite;
+    height: 0.3vh;
+  }
+  @keyframes sun {
+    from {
+      transform: translateY(-10vh);
+    }
+    to {
+      transform: translateY(-0.5vh);
+    }
+  }
+  .reg h1 {
+    font-size: 1rem;
+  }
+  .buttons {
+    width: 100vw;
+  }
+  .buttons button {
+    height: 5rem;
+    width: 10rem;
+    font-size: 1rem;
+  }
+  .buttons button:hover {
+    height: 3rem;
+    width: 8rem;
+  }
+  .title {
+    font-size: 1.5rem;
+    margin-top: 80px;
+  }
+  .title h1 {
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Post No Bills Jaffna SemiBold";
+  }
+  .title h3 {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+  }
+}
+@media screen and (max-width: 500px) {
+  .buttons button {
+    width: 15rem;
+  }
+  .buttons button:hover {
+    height: 4rem;
+    width: 10rem;
+  }
+}

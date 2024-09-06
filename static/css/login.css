@@ -1,0 +1,264 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  /* justify-content: center;
+    align-items: center; */
+  min-height: 100vh;
+  flex-direction: column;
+  background: url("../images/basketball.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  backdrop-filter: blur(3px);
+  box-shadow: inset 0 0 0 2000px rgba(15, 15, 15, 0.33);
+  overscroll-behavior: contain;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 5px;
+}
+
+.home-btn {
+  margin-left: 2rem !important;
+  margin-top: 2rem;
+  padding: 5px;
+  border-radius: 10px;
+  width: 100px;
+  background-color: rgb(229, 244, 246);
+  color: #6d6e6e;
+}
+
+.home-btn:hover {
+  background-color: rgb(186, 240, 250);
+  color: #404242;
+}
+
+.box {
+  position: relative;
+  width: 380px;
+  height: 420px;
+  background: #1c1c1c;
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.box::before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  transform-origin: bottom right;
+  background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+  animation: animate 6s linear infinite;
+}
+
+.box::after {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  transform-origin: bottom right;
+  background: linear-gradient(0deg, transparent, #45f3ff, #45f3ff);
+  animation: animate 6s linear infinite;
+  animation-delay: -3s;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+form {
+  position: absolute;
+  inset: 2px;
+  background-color: #2b2c31;
+  padding: 50px 40px;
+  border-radius: 8px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  color: #45f3ff !important;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.inputBox {
+  position: relative;
+  width: 300px;
+  margin-top: 35px !important;
+}
+
+.inputBox input {
+  position: relative;
+  width: 100%;
+  padding: 20px 10px 10px !important;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  color: #23242a;
+  font-size: 1em;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+  z-index: 10;
+}
+
+.inputBox span {
+  position: absolute;
+  left: 0;
+  padding: 20px 0px 10px;
+  pointer-events: none;
+  font-size: 1em;
+  color: #8f8f8f;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+}
+
+.inputBox input:valid ~ span,
+.inputBox input:focus ~ span {
+  color: #45f3ff;
+  transform: translateX(0px) translateY(-34px);
+  font-size: 0.75em;
+}
+
+.inputBox i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #45f3ff;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 9;
+}
+
+.inputBox input:valid ~ i,
+.inputBox input:focus ~ i {
+  height: 44px;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.links a {
+  margin: 10px 0;
+  font-size: 0.75em;
+  color: #8f8f8f;
+  text-decoration: beige;
+}
+
+.links a:hover,
+.links a:nth-child(2) {
+  color: #45f3ff;
+}
+
+input[type="submit"] {
+  border: none;
+  outline: none;
+  padding: 11px 25px;
+  background: #45f3ff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+  width: 100px;
+  margin-top: 10px;
+}
+
+input[type="submit"]:active {
+  opacity: 0.8;
+}
+
+/* @media screen and (max-width: 1000px) {
+    .main {
+        width: 100vw;
+    }
+    /* .close{
+    position:absolute;
+    right:10vmin;
+    top:45vmin; 
+  } */
+
+/* @media screen and (max-width: 915px) {
+    .main {
+        height: 80vh;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .main {
+        width: 100vw;
+        height: 90vh;
+    }
+    form {
+        width: 35vw;
+        padding: 0;
+    }
+}
+
+@media screen and (max-width: 515px) {
+    .main {
+        height: 80vh;
+    }
+    form {
+        height: 25vh;
+        width: 60%;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .main {
+        height: 55vh;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 396px) {
+    .main {
+        height: 55vh;
+    }
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    select {
+        display: block;
+        width: 80%;
+    }
+} */

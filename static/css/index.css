@@ -1,0 +1,7 @@
+main {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url(https://www.fcbarcelona.com/fcbarcelona/photo/2018/03/13/3787e059-e4f8-4765-9c25-af66398ba8a0/Camp-Nou-Grass.jpg);
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}

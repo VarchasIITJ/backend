@@ -1,0 +1,177 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'main:home' %}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fa fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Varchas</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'adminportal:dashboard' %}">
+                    <i class="fa fa-tachometer-alt"></i>
+                    <span>Admin Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Lists
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'adminportal:dusers' %}">
+                    <i class="fa fa-user"></i>
+                    <span>Players</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'adminportal:dteams' %}">
+                    <i class="fa fa-users"></i>
+                    <span>Registered Teams</span>
+                </a>
+            </li>
+
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Actions
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'adminportal:uscore' 0 %}">
+                    <i class="fa fa-vcard"></i>
+                    <span>Update Score</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{% url 'adminportal:mail' %}">
+                    <i class="fa fa-envelope"></i>
+                    <span>Email</span>
+                </a>
+            </li> -->
+
+            <!-- <li class="nav-item">
+                <a class="nav-link"
+                    href="https://docs.google.com/spreadsheets/d/1t_qBCeh_ivLuEusTX-sUR0n7d8BfwUAyIJIDs_sxpB8/edit?usp=sharing">
+                    <i class="fa fa-vcard"></i>
+                    <span>Google Sheet</span>
+                </a>
+            </li> -->
+
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- adminportal Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user}}</span>
+                                <i class="fa fa-user"></i>
+                            </a>
+                        </li>
+                        <div class="topbar-divider d-none d-sm-block"></div>
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link" href="{% url 'logout' %}">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Logout</span>
+                                <i class="fa fa-sign-out fa-sm fa-fw mr-2 text-gray-600"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <a href="{% url 'adminportal:teamInfo' %}"
+                            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fa fa-download fa-sm text-white-50"></i> Download Excel Sheet</a>
+                    </div>
+                    {% block body %}
+
+                    {% endblock %}
+                </div>
+                </script>
+                <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+                <script src="{% static 'js/main.js' %}"></script>
+                <script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+                <!--===============================================================================================-->
+                <script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+                <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+                <!--===============================================================================================-->
+                <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+                <!--===============================================================================================-->
+                <script src="{% static 'vendor/tilt/tilt.jquery.min.js' %}"></script>
+                <script>
+                    $('.js-tilt').tilt({
+                        scale: 1.1
+                    })
+                </script>
+</body>
+
+</html>

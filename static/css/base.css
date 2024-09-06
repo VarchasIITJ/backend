@@ -1,0 +1,507 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: "Roboto Mono", monospace;
+  color: rgb(197, 255, 250);
+  font-weight: 100;
+  overscroll-behavior: contain;
+  overflow-x: hidden;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Handle on hover */
+
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  perspective: 15vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo img {
+  height: 9.5rem;
+}
+
+.out {
+  overflow: hidden;
+  width: 230vw;
+  height: 60%;
+  position: absolute;
+  background: linear-gradient(0deg, #15073e 35%, #df319c 98%);
+  transform-style: preserve-3d;
+  transform: rotateX(45deg);
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto;
+}
+
+.image {
+  align-self: center;
+  justify-self: center;
+  position: absolute;
+  justify-self: flex-start;
+  width: 100vw;
+}
+
+.image img {
+  width: 100vw;
+}
+
+.title {
+  position: absolute;
+  z-index: 1000;
+  /* height: 100px; */
+  align-self: center;
+  color: white;
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-items: space-around;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  margin-top: 170px;
+}
+
+.title h1 {
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Post No Bills Jaffna SemiBold";
+  color: white;
+}
+
+.title h3 {
+  margin: 0;
+  padding: 0;
+  font-family: monospace;
+  font-size: 2.1rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 300;
+  color: white;
+}
+
+/* .about {
+  display: flex;
+  flex-direction: row !important;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+} */
+
+.right-section,
+.left-section {
+  width: 50vw;
+  height: 100vh;
+  border: 1px solid white;
+}
+
+.about h1 {
+  font-size: 3rem;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  color: white;
+}
+
+.about p {
+  width: 70vw;
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  color: white;
+}
+
+.about h3 {
+  color: white;
+}
+
+#second {
+  font-size: 1.5rem;
+  color: #00f0ff;
+  width: 60vw;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  border: none;
+  background-image: url("../images/neon-btn.png");
+  background-color: transparent;
+  height: 5rem;
+  width: 20rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: white;
+  font-family: Roboto Mono, monospace;
+  transition: 0.3s linear;
+}
+
+.buttons button:hover {
+  background: #9000ff;
+  background-image: none;
+  height: 4rem;
+  width: 14rem;
+}
+
+/* .about svg {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100vw;
+    overscroll-behavior: contain;
+    overflow-x: hidden;
+}
+
+.card {
+    position: relative!important;
+    border: none;
+    background-color: transparent;
+    height: 22rem;
+    width: 20rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: 0.3s linear;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0c0131;
+    text-align: center;
+    text-shadow: 0 0 2.5px #fff, 0 0 4px #fff, 0 0 4px #02eeff, 0 0 5px #009de6, 0 0 7.5px #00e6e6;
+}
+
+.reg {
+    height: 100vh;
+    background-image: url("../images/bg2.png");
+    background-color: #15073e;
+    width: 100vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    overflow-x: hidden;
+}
+
+.reg h1 {
+    margin-top: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 400;
+    font-size: 2rem;
+    color: white;
+} */
+
+/* 
+.list {
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+    background-image: url("../images/reg-border.png");
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 60% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.reg ul {
+    width: 50%;
+}
+
+.reg ul li {
+    font-weight: 300;
+    font-size: 1.2rem;
+} */
+
+/* have to start writing the styles for footer here */
+
+footer .bottom-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottom-section p {
+  text-align: center;
+  color: white;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 760px) {
+  .about p,
+  #second {
+    font-size: 0.8rem;
+    width: 90%;
+  }
+  @keyframes move {
+    from {
+      transform: translateY(-5vh);
+    }
+    to {
+      transform: translateY(-1vh);
+    }
+  }
+  .reg ul {
+    width: 83%;
+  }
+  .list {
+    background-size: 97% 100%;
+  }
+  @keyframes mountain_left {
+    from {
+      transform: translateY(-10vh);
+    }
+    to {
+      transform: translateY(-0.5vh);
+    }
+  }
+  .reg h1 {
+    font-size: 1rem;
+  }
+  .buttons {
+    width: 100vw;
+  }
+  .buttons button {
+    height: 5rem;
+    width: 10rem;
+    font-size: 1rem;
+  }
+  .buttons button:hover {
+    height: 3rem;
+    width: 8rem;
+  }
+  .title {
+    font-size: 1.5rem;
+    margin-top: 80px;
+  }
+  .title h1 {
+    margin: 0;
+    padding: 0;
+    height: 80px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Post No Bills Jaffna SemiBold";
+  }
+  .title h3 {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+    font-size: 1rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .buttons button {
+    width: 15rem;
+  }
+  .buttons button:hover {
+    height: 4rem;
+    width: 10rem;
+  }
+}
+
+/*CSS for Hamburger menu*/
+
+#navigation {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 3%;
+  padding: 0;
+  transition: 0.3s ease-in-out;
+}
+
+#menu {
+  width: 35px;
+  height: 30px;
+  margin: 30px 0 20px 20px;
+  cursor: pointer;
+}
+
+.bar {
+  height: 5px;
+  width: 100%;
+  background-color: aqua;
+  display: block;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+#bar1 {
+  transform: translateY(-4px);
+}
+
+#bar3 {
+  transform: translateY(4px);
+}
+
+.nav li {
+  list-style: none;
+  padding: 5px 0;
+}
+
+.nav {
+  padding: 0;
+  margin: 0 5px;
+  transition: 1s ease;
+  display: none;
+}
+
+.nav li a {
+  color: aliceblue;
+  text-decoration: none;
+  background-color: #8fe3cf;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: 0.3s ease-in;
+  z-index: 1;
+}
+
+ul:hover li a {
+  opacity: 0.3;
+}
+
+ul li a:hover {
+  background-color: rgb(250, 86, 86);
+  padding: 5px 10px;
+  transform: scale(1.5);
+  z-index: 1000;
+  opacity: 1;
+}
+
+.shiftToLeft {
+  margin-right: 30%;
+}
+
+.icon .bar {
+  z-index: 101;
+  background-color: aliceblue;
+}
+
+.icon #bar1 {
+  transform: translateY(4px) rotate(-45deg);
+}
+
+.icon #bar3 {
+  transform: translateY(-6px) rotate(45deg);
+}
+
+.icon #bar2 {
+  opacity: 0;
+}
+
+.change {
+  background-color: rgba(79, 84, 84, 0.377);
+  backdrop-filter: blur(5px);
+  height: 70vh;
+  position: absolute;
+  font-size: 20px;
+  top: 5vh;
+  z-index: 100;
+  width: 30vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+  .change {
+    width: 70vw;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .change {
+    width: 90vw;
+  }
+}

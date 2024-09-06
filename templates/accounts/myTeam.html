@@ -1,0 +1,408 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block body %}
+
+    {% csrf_token %}
+    <style>
+        td, th {
+            text-align: center;
+            padding: 2%;
+            border-bottom: 1px solid #ddd;
+            font-size: x-large;
+        }
+
+        input[type="submit"]:hover {
+            text-decoration: none;
+            color: #ff7315;
+        }
+
+        @media screen and (min-width: 300px) {
+            .pad {
+                padding: 0 0 30vh 0;
+            }
+
+        }
+
+        @media screen and (min-width: 400px) {
+            .pad {
+                padding: 10vh 4vh 12vh 4vh;
+            }
+
+        }
+
+        @media screen and (min-width: 700px) {
+            .pad {
+                padding: 5% 10% 10% 10%;
+            }
+
+        }
+
+        @media screen and (max-width: 1320px) {
+            .section_title1 {
+                font-size: 40px;
+            }
+            .section_subtitle1{
+                font-size: 39px;
+            }.section_subtitle2{
+                font-size: 28px;
+            }
+        }
+
+        @media all and (max-width: 1199px) {
+            .section_title1 {
+                font-size: 31px;
+            }
+            .section_subtitle1{
+                font-size: 30px;
+            }.section_subtitle2{
+                font-size: 20px;
+            }
+        }
+
+        @media all and (max-width: 991px) {
+            .section_title1 {
+                font-size: 24px;
+            }
+            .section_subtitle1{
+                font-size: 22px;
+            }.section_subtitle2{
+                font-size: 16px;
+            }
+        }
+
+        @media all and (max-width: 841px) {
+            .section_title1 {
+                font-size: 22px;
+            }
+            .section_subtitle1{
+                font-size: 21px;
+            }.section_subtitle2{
+                font-size: 19px;
+            }
+        }
+
+        @media all and (max-width: 768px) {
+            .section_title1 {
+                font-size: 18px;
+            }.section_subtitle1{
+                font-size: 17px;
+            }.section_subtitle2{
+                font-size: 15px;
+            }
+        }
+
+        @media all and (max-width: 575px) {
+            .section_title1 {
+                font-size: 16px;
+            }.section_subtitle1{
+                font-size: 15px;
+            }.section_subtitle2{
+                font-size: 14px;
+            }
+        }
+        label{
+            color: #256D85 !important;
+            font-weight:bold;
+        }
+    </style>
+    {% include 'navbar.html'%}
+    <!-- Profile -->
+    <div class="cta" style="background-color:#06283D ;min-height: 100vh">
+
+        <div class="d-flex flex-xl-row pad flex-column align-items-start justify-content-start">
+
+
+            <div class="cta_content p-5" style="width: 100%;margin-top: 100px;background-color: #F0EABE;border-radius: 20px">
+                <div class="section_title_container ps-5" style="">
+                    <div class="section_subtitle px-3 py-2" style="font-weight: bold;font-size: 2rem;color:#F66B0E;">{{ profile_user.user.first_name }}'s Team</div>
+
+                    <div class="section_title">
+                        <h1 class="section_title1" style="color: #256D85;">Team ID : {{ profile_team.teamId }}</h1>
+                    </div>
+                    <div class="section_subtitle">
+                        <h2 class="section_subtitle1" style="color: #256D85;">
+                            <i class="fa fa-futbol-o"></i>
+                            Sport
+                            : {{ profile_team.get_sport_display }}</h2>
+                    </div><br/><br/>
+                    {% if profile_team.get_sport_display == "Athletics" %}
+                        <div class="section_subtitle" >
+                            <h2 class="section_subtitle1" style="color: #256D85;">
+                                Registered Subevents :<br><br>
+                            </h2>
+                            {% for event in subevents %}
+                                <h3 class="section_subtitle2" style="color: #256D85">{{ event }}</h3><br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <div class="section_subtitle" >
+                        <h3 class="section_subtitle2" style="color: #256D85">
+                            <i class="fa fa-university" style="padding-right: 2vh"></i>
+                            College : {{ profile_team.college }}</h3>
+                    </div>
+                    <div class="section_subtitle" >
+                        <h3 class="section_subtitle2" style="color: #256D85">
+                            <i class="fa fa-user" style="padding-right: 1em"></i>
+                            Team
+                            Captain: {{ profile_team.captian.user.first_name }}</h3>
+                    </div>
+                    <div class="section_subtitle" >
+                        <h3 style="color: #256D85">Team Members</h3>
+                    </div>
+                    {% if userprofile.user_type == None %}
+                    {% for member in profile_team.member.all %}
+                        <div class="section_subtitle" >
+                            <h3 class="section_subtitle2" style="color: #256D85">{{ member.user.first_name }} {{ member.user.last_name }}</h3>
+                        </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="section_subtitle" >
+                            <h3 class="section_subtitle2" style="color: #256D85">{{ user.first_name }} {{ user.last_name }}</h3>
+                        </div>
+                        {% if userprofile.team_member2 != None %}
+                        <div class="section_subtitle" >
+                                    <h3 class="section_subtitle2" style="color: #256D85">{{ userprofile.team_member2}}</h3>
+                        </div>
+                        {% endif %}
+                        {% if userprofile.team_member3 != None %}
+                        <div class="section_subtitle">
+                                    <h3 class="section_subtitle2" style="color: #256D85">{{ userprofile.team_member3}}</h3>
+                        </div>
+                        {% endif %}
+                        {% if userprofile.team_member4 != None %}
+                        <div class="section_subtitle" >
+                                    <h3 class="section_subtitle2" style="color: #256D85">{{ userprofile.team_member4}}</h3>
+                        </div>
+                        {% endif %}
+                        {% if userprofile.team_member5 != None %}
+                        <div class="section_subtitle" >
+                                    <h3 class="section_subtitle2" style="color: #256D85">{{ userprofile.team_member5}}</h3>
+                        </div>
+                        {% endif %}
+                        {% if userprofile.team_member6 != None %}
+                        <div class="section_subtitle" >
+                                    <h3 class="section_subtitle2" style="color: #256D85">{{ userprofile.team_member6}}</h3>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="section_subtitle" >
+                        <h3 class="section_subtitle2" style="color: #256D85">Score : {{ profile_team.score }}</h3>
+                    </div>
+                </div>
+                <br/>
+                <a href="{% url 'main:home' %}"><button type="button" class="btn btn-secondary px-3 py-1">Home</button></a>
+
+                {% if profile_team.get_sport_display == "Athletics" %}
+                    <br/><br/>
+                    <form action="{% url 'accounts:athleticEvents'%}" method="post">
+                        {% csrf_token %}
+                        <center>
+                            <table style="width: 50%; border-collapse: collapse;">
+                            <tr>
+                                <th style="color: #372948">Sub Events</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="100m" value="100m" {% if '100m' in subevents %} checked {% endif %}>
+                                    <label for="100m">100m</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="200m" value="200m" {% if '200m' in subevents %} checked {% endif %}>
+                                    <label for="200m">200m</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="400m" value="400m" {% if '400m' in subevents %} checked {% endif %}>
+                                    <label for="400m">400m</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="800m" value="800m" {% if '800m' in subevents %} checked {% endif %}>
+                                    <label for="800m">800m</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="1500m" value="1500m" {% if '1500m' in subevents %} checked {% endif %}>
+                                    <label for="1500m">1500m</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="5000m" value="5000m" {% if '5000m' in subevents %} checked {% endif %}>
+                                    <label for="5000m">5000m (Only for boys)</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="4*100m" value="4*100m" {% if '4*100m' in subevents %} checked {% endif %}>
+                                    <label for="4*100m">4*100m Relay</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="4*400m" value="4*400m" {% if '4*400m' in subevents %} checked {% endif %}>
+                                    <label for="4*400m">4*400m Relay</label>
+                                </td>
+                            </tr>
+                        </table>
+                        <br><br>
+                        <input type="submit" value="Save/Update" class="button btn btn-secondary">
+                        </center>
+                    </form>
+                {% endif %}
+
+
+                {% if profile_team.get_sport_display == "Badminton" %}
+                <br/><br/>
+                <form action="{% url 'accounts:badmintonEvents'%}" method="post">
+                    {% csrf_token %}
+                    <center>
+                        <table style="width: 50%; border-collapse: collapse;">
+                        <tr>
+                            <th style="color: #372948">Sub Events</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Male" value="Male" {% if 'Male' in subevents %} checked {% endif %}>
+                                <label for="Male">Male</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Female" value="Female" {% if 'Female' in subevents %} checked {% endif %}>
+                                <label for="Female">Female</label>
+                            </td>
+                        </tr>
+
+                        {% comment %} <tr>
+                            <td>
+                                <input type="checkbox" name="Mixed" value="Mixed" {% if 'Mixed' in subevents %} checked {% endif %}>
+                                <label for="Female">Mixed</label>
+                            </td>
+                        </tr> {% endcomment %}
+                    </table>
+                    <br><br>
+                    <input type="submit" value="Save/Update" class="button btn btn-secondary">
+                    </center>
+                </form>
+            {% endif %}
+                        
+
+                        
+                {% if profile_team.get_sport_display == "Basketball" %}
+                <br/><br/>
+                <form action="{% url 'accounts:basketballEvents'%}" method="post">
+                    {% csrf_token %}
+                    <center>
+                        <table style="width: 50%; border-collapse: collapse;">
+                        <tr>
+                            <th style="color: #372948">Sub Events</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Male" value="Male" {% if 'Male' in subevents %} checked {% endif %}>
+                                <label for="Male">Male</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Female" value="Female" {% if 'Female' in subevents %} checked {% endif %}>
+                                <label for="Female">Female</label>
+                            </td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <input type="submit" value="Save/Update" class="button btn btn-secondary">
+                    </center>
+                </form>
+            {% endif %}
+                        
+
+                        
+                {% if profile_team.get_sport_display == "Volleyball" %}
+                <br/><br/>
+                <form action="{% url 'accounts:volleyballEvents'%}" method="post">
+                    {% csrf_token %}
+                    <center>
+                        <table style="width: 50%; border-collapse: collapse;">
+                        <tr>
+                            <th style="color: #372948">Sub Events</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Male" value="Male" {% if 'Male' in subevents %} checked {% endif %}>
+                                <label for="Male">Male</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Female" value="Female" {% if 'Female' in subevents %} checked {% endif %}>
+                                <label for="Female">Female</label>
+                            </td>
+                        </tr>
+                    </table>
+                    <br><br>
+                    <input type="submit" value="Save/Update" class="button btn btn-secondary">
+                    </center>
+                </form>
+            {% endif %}
+
+                        
+                {% if profile_team.get_sport_display == "Table Tennis" %}
+                <br/><br/>
+                <form action="{% url 'accounts:tabletennisEvents'%}" method="post">
+                    {% csrf_token %}
+                    <center>
+                        <table style="width: 50%; border-collapse: collapse;">
+                        <tr>
+                            <th style="color: #372948">Sub Events</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Male" value="Male" {% if 'Male' in subevents %} checked {% endif %}>
+                                <label for="Male">Male</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="Female" value="Female" {% if 'Female' in subevents %} checked {% endif %}>
+                                <label for="Female">Female</label>
+                            </td>
+                        </tr>
+
+                        
+                    </table>
+                    <br><br>
+                    <input type="submit" value="Save/Update" class="button btn btn-secondary">
+                    </center>
+                </form>
+            {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'styles/bootstrap-4.1.2/popper.js' %}"></script>
+    <script src="{% static 'styles/bootstrap-4.1.2/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+    <script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+    <script src="{% static 'plugins/OwlCarousel2-2.3.4/owl.carousel.js' %}"></script>
+    <script src="{% static 'plugins/easing/easing.js' %}"></script>
+    <script src="{% static 'plugins/progressbar/progressbar.min.js' %}"></script>
+    <script src="{% static 'plugins/parallax-js-master/parallax.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    </body>
+
+    </html>
+
+{% endblock %}
