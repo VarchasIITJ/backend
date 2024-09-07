@@ -102,31 +102,11 @@ def LoginUserView(request):
         return Response({"message": 'Invalid Password or Email'}, status=status.HTTP_400_BAD_REQUEST)
 
     # Generate a JWT token
-    refresh = RefreshToken.for_user(user)
+    refresh = RefreshToken.for_user(user)   
     access_token = str(refresh.access_token)
     refresh_token = str(refresh)  # Extract the refresh token value
 
     return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
-
-
-@api_view(['POST'])
-def google_login(request):
-    email_id=request.data.get('email')
-
-    try:
-        user = User.objects.get(email=email_id)
-        refresh = RefreshToken.for_user(user)
-        access_token = str(refresh.access_token)
-        refresh_token = str(refresh)  # Extract the refresh token value
-        return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
-    except User.DoesNotExist:
-        return Response({'message': 'Account not existing in db'})
-    
-
-    
-
-    
-
 
 
 
@@ -139,15 +119,25 @@ def google_signup(request):
     # print(email_id)
     try:
         user = User.objects.get(email=email_id)
-        return JsonResponse({'message': 'User already exists kindly login!'}, status=200)
+        # return JsonResponse({'message': 'User already exists kindly login!'}, status=200)
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)  # Extract the refresh token value
+        return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
+
     except User.DoesNotExist:
         # Create a new user if not found
        
-        user = User(email=email_id)
+        user_data = {
+            "email": email_id,
+            "username": email_id,  # Set email as the username
+        }
+        
+        user = User(email=email_id, username=email_id)
+        user.set_unusable_password()  # No password required for Google login
         user.save()
-        print("user created just now")
-        return JsonResponse({'message': 'User created, please provide additional info'}, status=200)
 
+        return Response({"message": 'User Created now needs additional information'}, status=status.HTTP_201_CREATED)
 
 class UpdateUserInfoView(APIView):
     def put(self, request):
@@ -157,7 +147,10 @@ class UpdateUserInfoView(APIView):
 
         if not user:
             return Response({"Error": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
-        
+         
+        user.first_name = request.data["firstname"],
+        user.last_name = request.data["lastname"],
+        user.save()
 
         profile_data = {
                 "user": user.id,
