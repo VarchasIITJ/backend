@@ -21,18 +21,21 @@ from django.contrib.auth.hashers import make_password
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from dotenv import load_dotenv
 from django.http import JsonResponse
 from django.contrib.auth import login
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from .models import User
+import os
 
 import sys
 
 # api method to register the user 
 
+load_dotenv()
 
+CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 
 class RegisterUserView(APIView):
     def post(self, request):
@@ -48,37 +51,39 @@ class RegisterUserView(APIView):
 
         hashed_password = make_password(request.data["password"])
         user_data = {
-            "username": request.data["email"],
             "email": request.data["email"],
-            "first_name": request.data.get("first_name", ""),
-            "last_name": request.data.get("last_name", ""),
+            "username":request.data["email"],
             "password": hashed_password,
         }
         user_serializer = UserSerializer(data=user_data)
         if user_serializer.is_valid():
             user = user_serializer.save()
-            if len(request.data['phone']) > 10:
-                return Response({"Error": "Phone number must be 10 digits"}, status=status.HTTP_400_BAD_REQUEST)
-            profile_data = {
-                "user": user.id,
-                "phone": request.data["phone"],
-                "gender": request.data["gender"],
-                "college": request.data["college"],
-                "state": request.data["state"],
-                "accommodation_required": request.data["accommodation_required"],
-            }
-
-            profile_serializer = UserProfileSerializer(data=profile_data)
-            if profile_serializer.is_valid():
-                profile_serializer.save()
-                return Response({"message": 'User created Successfully'}, status=status.HTTP_201_CREATED)
-            else:
-                user.delete()
-                print("Profile serializer errors:", profile_serializer.errors)  # Log profile serializer errors
-                return Response(profile_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":'User created Successfully'},status=status.HTTP_201_CREATED)
         else:
-            print("User serializer errors:", user_serializer.errors)  # Log user serializer errors
-            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+        
+        # if user_serializer.is_valid():
+        #     user = user_serializer.save()
+        #     profile_data = {
+        #         "user": user.id,
+        #         "phone": request.data["phone"],
+        #         "gender": request.data["gender"],
+        #         "college": request.data["college"],
+        #         "state": request.data["state"],
+        #         "accommodation_required": request.data["accommodation_required"],
+        #     }
+
+        #     profile_serializer = UserProfileSerializer(data=profile_data)
+        #     if profile_serializer.is_valid():
+        #         profile_serializer.save()
+        #         return Response({"message": 'User created Successfully'}, status=status.HTTP_201_CREATED)
+        #     else:
+        #         user.delete()
+        #         print("Profile serializer errors:", profile_serializer.errors)  # Log profile serializer errors
+        #         return Response(profile_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # else:
+        #     print("User serializer errors:", user_serializer.errors)  # Log user serializer errors
+        #     return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
 # api method to login the user 
@@ -106,28 +111,74 @@ def LoginUserView(request):
 
 @api_view(['POST'])
 def google_login(request):
-    token = request.POST.get('token')
+    email_id=request.data.get('email')
+
     try:
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), "YOUR_GOOGLE_CLIENT_ID")
+        user = User.objects.get(email=email_id)
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)  # Extract the refresh token value
+        return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({'message': 'Account not existing in db'})
+    
 
-        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
-            raise ValueError('Wrong issuer.')
+    
 
-        user, created = User.objects.get_or_create(
-            email=idinfo['email'],
-            defaults={
-                'username': idinfo['name'],
-                'first_name': idinfo['given_name'],
-                'last_name': idinfo['family_name'],
+    
+
+
+
+
+
+@api_view(['POST'])
+def google_signup(request):
+    email_id = request.data.get('email')
+    if not email_id:
+        return JsonResponse({'error': 'Email is required'}, status=400)
+    # print(email_id)
+    try:
+        user = User.objects.get(email=email_id)
+        return JsonResponse({'message': 'User already exists kindly login!'}, status=200)
+    except User.DoesNotExist:
+        # Create a new user if not found
+       
+        user = User(email=email_id)
+        user.save()
+        print("user created just now")
+        return JsonResponse({'message': 'User created, please provide additional info'}, status=200)
+
+
+class UpdateUserInfoView(APIView):
+    def put(self, request):
+        # Retrieve the user based on the email passed in the request
+        email = request.data.get('email')
+        user = User.objects.filter(email=email).first()
+
+        if not user:
+            return Response({"Error": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+        profile_data = {
+                "user": user.id,
+                "phone": request.data["phone"],
+                "gender": request.data["gender"],
+                "college": request.data["college"],
+                "state": request.data["state"],
+                "accommodation_required": request.data["accommodation_required"],
             }
-        )
-        login(request, user)
-        return JsonResponse({'message': 'User logged in successfully!'})
-    except ValueError:
-        return JsonResponse({'message': 'Invalid token'}, status=400)
 
+        profile_serializer = UserProfileSerializer(data=profile_data)
 
+        
 
+        if profile_serializer.is_valid():
+                profile_serializer.save()
+                return Response({"message": 'Profile Updated Successfully'}, status=status.HTTP_201_CREATED)
+        else:
+            user.delete()
+            print("Profile serializer errors:", profile_serializer.errors)  # Log profile serializer errors
+            return Response(profile_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CustomLoginView(LoginView):
     template_name = 'login.html'
