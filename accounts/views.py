@@ -142,14 +142,16 @@ def google_signup(request):
 class UpdateUserInfoView(APIView):
     def put(self, request):
         # Retrieve the user based on the email passed in the request
-        email = request.data.get('email')
+        email = request.data['email']
+        print(email)
+        print(request.data)
         user = User.objects.filter(email=email).first()
 
         if not user:
             return Response({"Error": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
          
-        user.first_name = request.data["firstname"],
-        user.last_name = request.data["lastname"],
+        user.first_name = request.data["first_name"],
+        user.last_name = request.data["last_name"],
         user.save()
 
         profile_data = {
@@ -363,7 +365,8 @@ def userDisplayProfile(request):
                 "user_id": user.user.id,
                 "email": user.user.username,
                 "phone": user.phone,
-                "name":user.user.first_name +user.user.last_name
+                "first_name":user.user.first_name,
+                "last_name":user.user.last_name
          }
     return Response(response_data, status=status.HTTP_200_OK)
 
