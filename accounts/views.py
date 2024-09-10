@@ -150,8 +150,8 @@ class UpdateUserInfoView(APIView):
         if not user:
             return Response({"Error": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
          
-        user.first_name = request.data["first_name"],
-        user.last_name = request.data["last_name"],
+        user.first_name = request.data["first_name"]
+        user.last_name = request.data["last_name"]
         user.save()
 
         profile_data = {
