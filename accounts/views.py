@@ -108,7 +108,39 @@ def LoginUserView(request):
 
     return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
 
+# API to edit user profile
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+class EditUserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def put(self, request):
+        # Get the authenticated user profile
+        user_profile = get_object_or_404(UserProfile, user=request.user)
+        
+        # Update user fields (first_name, last_name)
+        user = user_profile.user
+        user.first_name = request.data.get('first_name', user.first_name)
+        user.last_name = request.data.get('last_name', user.last_name)
+        user.save()
+
+        # Update profile fields
+        user_profile.phone = request.data.get('phone', user_profile.phone)
+        user_profile.gender = request.data.get('gender', user_profile.gender)
+        user_profile.college = request.data.get('college', user_profile.college)
+        user_profile.state = request.data.get('state', user_profile.state)
+        user_profile.accommodation_required = request.data.get('accommodation_required', user_profile.accommodation_required)
+        
+        # Save the updated profile
+        user_profile.save()
+
+        # Serialize the updated profile data
+        profile_serializer = UserProfileSerializer(user_profile)
+        
+        return Response({
+            "message": "Profile updated successfully!",
+            "profile_data": profile_serializer.data
+        }, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
