@@ -6,8 +6,8 @@
 
 Requirements:
 
-- Python 3.7.1 runtime
-- Django 3.0.0
+- Python 3.12.4
+- Django 4.2.7
 - Other dependencies in `requirements.txt`
 
 Procedure:
