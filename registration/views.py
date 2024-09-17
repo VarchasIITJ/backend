@@ -69,7 +69,7 @@ def CreateTeamView(request):
             message = f'Hi {user1.first_name}, Thank you for being part of Varchas23 . The TeamId of {TeamRegistration.SPORT_CHOICES[int(sport)-1][1]} {team_name} is {team_id}.'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user1.email,]
-            send_mail( subject, message, email_from, recipient_list )
+            #send_mail( subject, message, email_from, recipient_list )
             user_profile.teamId.add(team)
             if sport_info in [13, 15]:
                     team.teamcount = team.teamsize
@@ -93,7 +93,7 @@ def CreateTeamView(request):
                 
             user_profile.save()
             print(user_profile)
-        return Response({"message": "Team(s) created successfully."}, status=status.HTTP_201_CREATED)
+        return Response({"message": "Team(s) created successfully.Check your Profile"}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
