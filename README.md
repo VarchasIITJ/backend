@@ -46,6 +46,7 @@ Procedure:
   python manage.py makemigrations events
   python manage.py makemigrations registration
   python manage.py makemigrations sponsors
+  python manage.py makemigrations app_apis
   python manage.py migrate
   ```
 - Create a superuser
