@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from .serializers import TeamsSerializer
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes  
 from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
@@ -43,8 +43,7 @@ def CreateTeamView(request):
         "sport": sport_info,
         "category": request.data['category'],
         "teamsize": request.data['teamsize'],
-        "gender": request.data['gender'],  
-        "designation": request.data['designation'],  
+
     }
     serializer = TeamsSerializer(data=requested_data)
     if serializer.is_valid():
@@ -52,13 +51,11 @@ def CreateTeamView(request):
         teamsize = serializer.validated_data['teamsize']
         sport = serializer.validated_data['sport']
         spor = TeamRegistration.SPORT_CHOICES[int(sport)-1][1][:3]
-        gender = serializer.validated_data['gender']
-        designation = serializer.validated_data['designation']
         teams_data = request.data.get('teams', [])
 
         # Generate the team ID
         for team_name in teams_data:
-            team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), gender.upper(), designation.upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
+            team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
             team = TeamRegistration.objects.create(
                 teamId=team_id,
                 sport=sport,
