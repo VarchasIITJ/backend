@@ -1,4 +1,4 @@
-# Varchas ![Status active](https://img.shields.io/badge/Status-active%20development-2eb3c1.svg) ![Django 3.0.0](https://img.shields.io/badge/Django-3.0.0-green.svg) ![Python 3.7.1](https://img.shields.io/badge/Python-3.7.1-blue.svg) ![Python Package CI](https://github.com/devlup-labs/varchas/workflows/Python%20package/badge.svg)
+# Varchas ![Status active](https://img.shields.io/badge/Status-active%20development-2eb3c1.svg) ![Django 4.2.7](https://img.shields.io/badge/Django-4.2.7-green.svg) ![Python 3.12.5](https://img.shields.io/badge/Python-3.12.5-blue.svg) ![Python Package CI](https://github.com/devlup-labs/varchas/workflows/Python%20package/badge.svg)
 
 ## Main web portal for the annual sports fest of IIT Jodhpur Varchas.
 
@@ -6,8 +6,8 @@
 
 Requirements:
 
-- Python 3.7.1 runtime
-- Django 3.0.0
+- Python 3.12.5
+- Django 4.2.7
 - Other dependencies in `requirements.txt`
 
 Procedure:
