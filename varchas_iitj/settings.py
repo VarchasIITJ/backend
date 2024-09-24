@@ -48,11 +48,12 @@ MIDDLEWARE = [
 ]
 
 CSRF_TRUSTED_ORIGINS=[
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://apivarchas24.in"
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  "https://www.varchas23.in"
+    "http://localhost:3000",  "https://www.varchas24.in"
 ]
 
 ROOT_URLCONF = 'varchas_iitj.urls'
