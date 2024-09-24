@@ -55,7 +55,10 @@ def CreateTeamView(request):
 
         # Generate the team ID
         for team_name in teams_data:
-            team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
+            if category=="mixed":
+                team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), 'D', team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
+            else:
+                team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
             team = TeamRegistration.objects.create(
                 teamId=team_id,
                 sport=sport,
