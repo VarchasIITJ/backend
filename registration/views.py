@@ -43,7 +43,6 @@ def CreateTeamView(request):
         "sport": sport_info,
         "category": request.data['category'],
         "teamsize": request.data['teamsize'],
-
     }
     serializer = TeamsSerializer(data=requested_data)
     if serializer.is_valid():

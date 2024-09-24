@@ -26,7 +26,7 @@ from django.http import JsonResponse
 from django.contrib.auth import login
 from google.oauth2 import id_token
 from google.auth.transport import requests
-from .models import User
+from .models import User, UserProfile
 import os
 
 import sys
@@ -62,6 +62,7 @@ class RegisterUserView(APIView):
         else:
             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
         
+        # avoiding this as with another post request this will updated
         # if user_serializer.is_valid():
         #     user = user_serializer.save()
         #     profile_data = {
@@ -97,6 +98,13 @@ def LoginUserView(request):
     
     if user is None:
         return Response({"message": 'User not found!'}, status=status.HTTP_404_NOT_FOUND)
+    userProfile=UserProfile.objects.filter(user=user).first()
+    
+    if userProfile is None:
+        print("hello")
+        return Response({"message":'User Profile not created'},status=status.HTTP_404_NOT_FOUND)
+
+    
     
     if not user.check_password(password):
         return Response({"message": 'Invalid Password or Email'}, status=status.HTTP_400_BAD_REQUEST)
@@ -151,11 +159,16 @@ def google_signup(request):
     # print(email_id)
     try:
         user = User.objects.get(email=email_id)
+        user_profile=UserProfile.objects.get(user=user)
         # return JsonResponse({'message': 'User already exists kindly login!'}, status=200)
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
         refresh_token = str(refresh)  # Extract the refresh token value
         return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
+
+    except UserProfile.DoesNotExist:
+        return Response({"message": 'User Created now needs additional information'})
+
 
     except User.DoesNotExist:
         # Create a new user if not found
@@ -166,6 +179,8 @@ def google_signup(request):
         }
         
         user = User(email=email_id, username=email_id)
+
+
         user.set_unusable_password()  # No password required for Google login
         user.save()
 
