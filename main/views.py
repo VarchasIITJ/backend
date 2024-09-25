@@ -62,7 +62,7 @@ def payment(request):
 
     if userprofile.teamId.exists():
         captain_teams = userprofile.teamId.filter(captian=userprofile)
-        
+        track_team=["4x100m","4x400m"]
         if captain_teams.exists():
             total_amount = 0
             for team in captain_teams:
@@ -70,16 +70,22 @@ def payment(request):
                 amount = 0
                 if sport == '1':
                     if team.category == 'men':
-                        amount = 200
+                        if team.teams in track_team:
+                            amount = 700
+                        else:
+                            amount = 200
                     if team.category == 'women':
-                        amount=150
+                        if team.teams in track_team:
+                            amount = 500
+                        else:
+                            amount = 150
                 elif sport == '2':
-                    if team.category == 'men':
-                        amount = 1500
+                    if team.category == 'men' and team.teams == 'Individual':
+                        amount = 1300
                     elif team.category == 'women':
                         amount = 1200
                     else:
-                        amount = 1000
+                        amount = 1300
                 elif sport == '3':
                     if team.category == 'men':
                         amount = 3500
@@ -87,20 +93,22 @@ def payment(request):
                         amount = 2500
                 elif sport == '4':
                     if team.category == 'men':
-                        amount = 5000
+                        amount = 5500
                 elif sport == '5':
                     if team.category == 'men':
-                        amount = 5000
+                        amount = 5500
                     elif team.category == 'women':
-                        amount = 3000
+                        amount = 2500
                 elif sport == '6':
                     if team.category == 'men':
-                        amount = 1500
+                        amount = 1300
                     elif team.category == 'women':
                         amount = 1200
                 elif sport == '7':
                     if team.category == 'men':
-                        amount = 1200
+                        amount = 1000
+                    elif team.category == 'women':
+                        amount = 500
                 elif sport == '8':
                     if team.category == 'men':
                         amount = 3500
@@ -108,20 +116,25 @@ def payment(request):
                         amount = 2500
                 elif sport == '9':
                     if team.category == 'men':
-                        amount = 3500
+                        amount = 4000
+                    elif team.category == 'women':
+                        amount = 2000
                 elif sport == '10':
                     if team.category == 'men':
                         amount = 3500
                 elif sport == '11':
-                    amount = 500
+                    if team.category == 'men':
+                        amount = 700
+                    elif team.category=='women':
+                        amount = 500
                 elif sport == '12':
-                    amount = 200
+                    amount = 500
                 elif sport == '13':
                     amount = 99
                 elif sport == '14':
                     amount = 499
                 elif sport == '15':
-                    amount = 99
+                    amount = 250
 
                 total_amount += amount
 

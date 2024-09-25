@@ -53,9 +53,20 @@ def CreateTeamView(request):
         teams_data = request.data.get('teams', [])
 
         # Generate the team ID
+        track_single=["100m", "200m", "400m", "800m", "1500m", "5000m","Long Jump","Triple Jump","High Jump","Discuss Throw","Javelin Throw","Shot Put"]
+        track_team=["4x100m","4x400m"]
+
         for team_name in teams_data:
+
             if category=="mixed":
                 team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), 'D', team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
+
+            elif team_name in track_single:
+                team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), 'I',user.username[:3].upper(),randint(1, 99), randint(1, 9))
+            
+            elif team_name in track_team:
+                team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), 'T',user.username[:3].upper(),randint(1, 99), randint(1, 9))
+
             else:
                 team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
             team = TeamRegistration.objects.create(

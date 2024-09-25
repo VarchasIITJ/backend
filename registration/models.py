@@ -13,7 +13,7 @@ class TeamRegistration(models.Model):
         ('8', 'Volleyball'),
         ('9', 'Kabaddi'),
         ('10', 'Hockey'),
-        ('11', 'Squach'),
+        ('11', 'Squash'),
         ('12', 'Chess'),
         ('13', 'BGMI'),
         ('14','Valorant'),
