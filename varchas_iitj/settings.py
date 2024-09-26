@@ -1,8 +1,10 @@
 import os
 from decouple import config
+from dotenv import load_dotenv
 from datetime import timedelta
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+load_dotenv()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
@@ -174,14 +176,12 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 AUTHENTICATION_BACKENDS = (
     ('django.contrib.auth.backends.ModelBackend'),
 )
-# APPEND_SLASH = True'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
-# EMAIL_PORT = config('EMAIL_PORT')
-EMAIL_PORT = 587
+EMAIL_HOST_USER = os.getenv('EMAIL_ID')
+EMAIL_HOST_PASSWORD=os.getenv('APP_PASSWORD')
+EMAIL_PORT = os.getenv('PORT_NUM')
 EMAIL_USE_TLS = True
 
 

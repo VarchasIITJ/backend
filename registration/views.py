@@ -67,6 +67,7 @@ def CreateTeamView(request):
             elif team_name in track_team:
                 team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), 'T',user.username[:3].upper(),randint(1, 99), randint(1, 9))
 
+
             else:
                 team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
             team = TeamRegistration.objects.create(
@@ -85,7 +86,7 @@ def CreateTeamView(request):
             message = f'Hi {user1.first_name}, Thank you for being part of Varchas23 . The TeamId of {TeamRegistration.SPORT_CHOICES[int(sport)-1][1]} {team_name} is {team_id}.'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user1.email,]
-            #send_mail( subject, message, email_from, recipient_list )
+            send_mail( subject, message, email_from, recipient_list )
             user_profile.teamId.add(team)
             if sport_info in [13, 15]:
                     team.teamcount = team.teamsize
