@@ -82,8 +82,8 @@ def CreateTeamView(request):
                 teams=team_name
             )
             user1=request.user
-            subject='Varchas23 | Confirmation of Team registration'
-            message = f'Hi {user1.first_name}, Thank you for being part of Varchas23 . The TeamId of {TeamRegistration.SPORT_CHOICES[int(sport)-1][1]} {team_name} is {team_id}.'
+            subject='Varchas24 | Confirmation of Team registration'
+            message = f'Hi {user1.first_name}, Thank you for being part of Varchas24 . The TeamId of {TeamRegistration.SPORT_CHOICES[int(sport)-1][1]} {team_name} is {team_id}.'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user1.email,]
             send_mail( subject, message, email_from, recipient_list )

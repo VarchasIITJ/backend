@@ -235,6 +235,7 @@ class CustomLoginView(LoginView):
 class PasswordReset(APIView):
     def post(self,request):
          email = request.data.get('email')
+         print(email)
          user=get_object_or_404(User,email=email)
          if not user:
              return Response({"message":"Sorry! User not found"},status=status.HTTP_404_NOT_FOUND)
@@ -246,7 +247,7 @@ class PasswordReset(APIView):
          except:
             reset_request = PasswordResetRequest(user=user,email=email,otp=otp)
             reset_request.save()
-         subject='Varchas23 | OTP Verification'
+         subject='Varchas24 | OTP Verification'
          message = f'Hi {user.username}, Here is your otp {otp}.'
          email_from = settings.EMAIL_HOST_USER
          recipient_list = [user.email, ]
@@ -285,7 +286,7 @@ def resendpassword(request):
     otp = random.randint(1000, 9999)
     reset_request.otp=otp
     reset_request.save()
-    subject='Varchas23 | OTP Verification'
+    subject='Varchas24 | OTP Verification'
     message = f'Hi {user.username}, Here is your otp {otp}.'
     email_from = settings.EMAIL_HOST_USER
     recipient_list = [user.email, ]
