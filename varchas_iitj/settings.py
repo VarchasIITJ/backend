@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'app_apis',
     'corsheaders',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'django_sqlite_backup'
 ]
 
 MIDDLEWARE = [

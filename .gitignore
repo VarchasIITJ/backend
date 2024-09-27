@@ -48,3 +48,4 @@ myenv/
 .vscode/settings.json
 "sendgrid.env"
 */migrations
+backup/
