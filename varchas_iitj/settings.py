@@ -34,11 +34,11 @@ INSTALLED_APPS = [
     'app_apis',
     'corsheaders',
     'rest_framework_simplejwt',
-    'dbbackup'
+    # 'dbbackup'
 ]
 
-DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
-DBBACKUP_STORAGE_OPTIONS = {'location': '/home/chinmay/backend/backup/'}
+# DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+# DBBACKUP_STORAGE_OPTIONS = {'location': '/home/chinmay/backend/backup/'}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
