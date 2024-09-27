@@ -34,8 +34,11 @@ INSTALLED_APPS = [
     'app_apis',
     'corsheaders',
     'rest_framework_simplejwt',
-    'django_sqlite_backup'
+    'dbbackup'
 ]
+
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': '/home/chinmay/backend/backup/'}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,6 +61,8 @@ CSRF_TRUSTED_ORIGINS=[
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  "https://www.varchas24.in"
 ]
+
+
 
 ROOT_URLCONF = 'varchas_iitj.urls'
 
