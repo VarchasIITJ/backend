@@ -236,7 +236,7 @@ class PasswordReset(APIView):
     def post(self,request):
          email = request.data.get('email')
          print(email)
-         user=get_object_or_404(User,email=email)
+         user=User.objects.get(email=email)
          if not user:
              return Response({"message":"Sorry! User not found"},status=status.HTTP_404_NOT_FOUND)
          otp = random.randint(1000, 9999)
@@ -383,7 +383,8 @@ def userDisplayteam(request):
                     "score": team.score,
                     "category": team.category,
                     "players_info":team_users_info,
-                    "captain": team.captian==user_profile
+                    "captain": team.captian==user_profile,
+                    "event":team.teams
                 }
                 
                 team_data.append(team_info)
