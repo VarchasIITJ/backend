@@ -10,7 +10,7 @@ class TeamRegistration(models.Model):
         ('5', 'Football'),
         ('6', 'Table Tennis'),
         ('7', 'Lawn Tennis'),
-        ('8', 'Volleyball'),
+        ('8', 'Volleyball'),    
         ('9', 'Kabaddi'),
         ('10', 'Hockey'),
         ('11', 'Squash'),

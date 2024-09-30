@@ -89,7 +89,7 @@ def CreateTeamView(request):
             send_mail( subject, message, email_from, recipient_list )
             user_profile.teamId.add(team)
             if sport_info in [13, 15]:
-                    team.teamcount = team.teamsize
+                    # team.teamcount = team.teamsize
                     team.save()
                     if sport_info == 13:
                         user_profile.team_member1_bgmi_ingame_id = request.data.get('team_id', {}).get('id1')
