@@ -128,15 +128,15 @@ def downloadExcel(request):
         ws.write(row_num, col_num, columns[col_num], font_style)
     font_style = xlwt.XFStyle()
     teams = TeamRegistration.objects.all().order_by('-captian__user__date_joined')
-    users = UserProfile.objects.all()
+    # users = UserProfile.objects.all()
     for team in teams:
         if team.captian != None:
             team_members = []
-            for user in users:
-                if user.teamId.filter(teamId=team.teamId).exists():
-                    team_members.append(user.user.first_name)
-            team_members_str = ', '.join(team_members) if team_members else ""
-            members = team_members_str
+            # for user in users:
+            #     if user.teamId.filter(teamId=team.teamId).exists():
+            #         team_members.append(user.user.first_name)
+            # team_members_str = ', '.join(team_members) if team_members else ""
+            # members = team_members_str
             row_num = row_num + 1
             ws.write(row_num, 0, team.teamId, font_style)
             ws.write(row_num, 1, team.get_sport_display(), font_style)
@@ -145,7 +145,7 @@ def downloadExcel(request):
             ws.write(row_num, 4, team.captian.user.first_name, font_style)
             ws.write(row_num, 5, team.captian.phone, font_style)
             ws.write(row_num, 6, team.college, font_style)
-            ws.write(row_num, 7, members, font_style)
+            # ws.write(row_num, 7, members, font_style)
 
     ws = wb.add_sheet("Users")
     row_num = 0
