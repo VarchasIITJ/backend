@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 from .models import UserProfile,PasswordResetRequest
+from registration.models import TeamRegistration 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,6 +15,25 @@ class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserProfile
         fields='__all__'
+
+class UserProfileSerailizerForPR(serializers.ModelSerializer):
+    first_name= serializers.CharField(source='user.first_name', read_only=True)
+    email_id= serializers.CharField(source='user.email', read_only=True)
+    team_ids = serializers.SerializerMethodField()
+
+    class Meta:
+        model=UserProfile
+        fields=['email_id','first_name','phone','gender','college','accommodation_required','team_ids']
+    
+    def get_team_ids(self, obj):
+        team_ids = obj.teamId.values_list('teamId', flat=True)  # Assuming teamId is a CharField in TeamRegistration
+        return team_ids  # Return the list of team IDs
+
+class UserProfileSerailizerForTeam(serializers.ModelSerializer):
+    first_name = serializers.CharField(source='user.first_name', read_only=True)
+    class Meta:
+        model=UserProfile
+        fields=['first_name']
 
 class PasswordSerializer(serializers.ModelSerializer):
     class Meta:

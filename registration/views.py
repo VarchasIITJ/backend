@@ -4,10 +4,9 @@ from accounts.models import UserProfile
 from .models import TeamRegistration
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
-from rest_framework import viewsets
-from .serializers import TeamsSerializer
-from rest_framework import permissions
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets,generics
+from .serializers import TeamsSerializer,TeamsSerailizerForPR
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from rest_framework.decorators import api_view, permission_classes  
 from rest_framework.response import Response
 from rest_framework import status
@@ -15,6 +14,15 @@ from django.conf import settings
 from random import randint
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
+
+
+
+class TeamRegistrationListAPIView(generics.ListAPIView):
+    queryset = TeamRegistration.objects.all()
+    serializer_class = TeamsSerailizerForPR
+    # permission_classes = [IsAdminUser]
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -67,7 +75,8 @@ def CreateTeamView(request):
             elif team_name in track_team:
                 team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), 'T',user.username[:3].upper(),randint(1, 99), randint(1, 9))
 
-
+            elif team_name=="Blitz" or team_name=="Classical":
+                    team_id="V-{}-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(),'I',team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
             else:
                 team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
             team = TeamRegistration.objects.create(
@@ -154,6 +163,6 @@ def removeplayer(request):
                     status=status.HTTP_200_OK)
 
 class TeamViewSet(viewsets.ModelViewSet):
-    queryset = TeamRegistration.objects.all()
+    queryset = TeamRegistration.objects.all() 
     serializer_class = TeamsSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = [IsAuthenticatedOrReadOnly]

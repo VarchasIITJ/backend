@@ -4,9 +4,8 @@ from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from registration.models import TeamRegistration
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
-from rest_framework import permissions
-from .serializers import UserSerializer, GroupSerializer,UserProfileSerializer
+from rest_framework import viewsets,permissions,generics
+from .serializers import UserSerializer, GroupSerializer,UserProfileSerializer,UserProfileSerailizerForPR
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -14,14 +13,13 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
 from django.core.mail import send_mail
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.contrib.auth.views import LoginView
 from django.shortcuts import reverse, redirect
 from django.contrib.auth.hashers import make_password
 
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from dotenv import load_dotenv
 from django.http import JsonResponse
 from django.contrib.auth import login
 from google.oauth2 import id_token
@@ -33,9 +31,10 @@ import sys
 
 # api method to register the user 
 
-load_dotenv()
-
-CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+class UserProfileListAPIView(generics.ListAPIView):
+    queryset = UserProfile.objects.all()
+    serializer_class = UserProfileSerailizerForPR
+    # permission_classes = [IsAdminUser]
 
 class RegisterUserView(APIView):
     def post(self, request):
