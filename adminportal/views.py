@@ -123,7 +123,7 @@ def downloadExcel(request):
     row_num = 0
     font_style = xlwt.XFStyle()
     font_style.font.bold = True
-    columns = ['TeamID', 'Sport', 'Category','Sub Event', 'Captain', 'Captain no.', 'College','Members']
+    columns = ['TeamID', 'Sport', 'Category','Sub Event', 'Captain', 'Captain no.', 'College','Payment_Status','Members']
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
     font_style = xlwt.XFStyle()
@@ -145,7 +145,8 @@ def downloadExcel(request):
             ws.write(row_num, 4, team.captian.user.first_name, font_style)
             ws.write(row_num, 5, team.captian.phone, font_style)
             ws.write(row_num, 6, team.college, font_style)
-            # ws.write(row_num, 7, members, font_style)
+            ws.write(row_num,7,team.get_payment_status_display(),font_style)
+            # ws.write(row_num, 8, members, font_style)
 
     ws = wb.add_sheet("Users")
     row_num = 0
