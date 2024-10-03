@@ -19,9 +19,16 @@ class TeamRegistration(models.Model):
         ('14','Valorant'),
         ('15', 'Clash Royale'),
     )
+    PAYMENT_CHOICES=(
+        ('1','Not Paid'),
+        ('2','Accomadation Done'),
+        ('3','Registration Done'),
+        ('4','A+R Done')
+    )
     teamId = models.CharField(max_length=25, unique=True, blank=True, null=True)
     sport = models.CharField(max_length=2, choices=SPORT_CHOICES)
     college = models.CharField(max_length=128, blank=True, null=True)
+    payment_status=models.CharField(max_length=2,choices=PAYMENT_CHOICES,default='1')
     captian = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
     score = models.IntegerField(default=-1)
     category = models.CharField(max_length=1024, blank=True, null=True)
