@@ -76,7 +76,11 @@ def CreateTeamView(request):
                 team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), 'T',user.username[:3].upper(),randint(1, 99), randint(1, 9))
 
             elif team_name=="Blitz" or team_name=="Classical":
-                    team_id="V-{}-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(),'I',team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
+                team_id="V-{}-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(),'I',team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
+            
+            elif spor=="Tab" and team_name=="Team":
+                team_id="V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), 'I',user.username[:3].upper(),randint(1, 99), randint(1, 9))
+
             else:
                 team_id = "V-{}-{}-{}-{}-{}-{}".format(spor[:3].upper(), category[:1].upper(), team_name[:1].upper(),user.username[:3].upper(),randint(1, 99), randint(1, 9))
             team = TeamRegistration.objects.create(
