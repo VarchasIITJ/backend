@@ -14,7 +14,7 @@ from django.views.generic import CreateView
 
 @login_required(login_url='login')
 def dashboard(request):
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         return render(request, "404")
     teams = TeamRegistration.objects.all()
     nteams = teams.count()
@@ -25,7 +25,7 @@ def dashboard(request):
 
 @login_required(login_url='login')
 def dashboardTeams(request, sport=0):
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         return render(request, "404")
     if request.method == 'POST':
         sport = request.POST.get('sport')
@@ -48,7 +48,7 @@ def dashboardTeams(request, sport=0):
 
 
 def updateScore(request, sport=0):
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         return render(request, "404")
     if sport == 0 or sport == '0':
         teams = TeamRegistration.objects.all()
@@ -108,7 +108,7 @@ def updateScore(request, sport=0):
 
 @login_required(login_url='login')
 def dashboardUsers(request):
-    if not request.user.is_superuser:
+    if not request.user.is_staff:
         return render(request, "404")
     users = UserProfile.objects.all().order_by('-user__date_joined')
     return render(request, 'adminportal/dashboardUsers.html', {'users': users})

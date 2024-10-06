@@ -226,7 +226,7 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get_redirect_url(self):
-        if self.request.user.is_superuser:
+        if self.request.user.is_staff:
             return reverse('adminportal:dashboard')
         else:
             return reverse('main:home')
