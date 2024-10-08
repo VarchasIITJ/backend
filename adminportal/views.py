@@ -24,19 +24,26 @@ def dashboard(request):
     return render(request, 'adminportal/dashboard.html', context)
 
 @login_required(login_url='login')
-def dashboardTeams(request, sport=0 ,category=0,team_type=0):
+def dashboardTeams(request,sport=None,category=None,team_type=None):
+
+    sports = ['Athletics', 'Badminton', 'Basketball', 'Cricket', 'Football',
+              'Table Tennis', 'Lawn Tennis', 'Volleyball','Kabaddi','Hockey','Squash',
+              'Chess','BGMI','Valorant','Clash Royale']
+
     if not request.user.is_staff:
         return render(request, "404")
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
         sport = request.POST.get('sport')
         category = request.POST.get('category')
         team_type = request.POST.get('team_type')
     
     teams = TeamRegistration.objects.all()
 
-    if sport != '0' and sport != 0:  # Filter by sport if it's not '0' (which is 'All')
-        teams = teams.filter(sport=sport)
+    
+
+    if sport:
+        teams = teams.filter(sport=str(sports.index(sport)+1))
 
     if category:  # Filter by category if provided
         teams = teams.filter(category=category)
@@ -52,9 +59,7 @@ def dashboardTeams(request, sport=0 ,category=0,team_type=0):
     # else:
     #     teams = TeamRegistration.objects.filter(sport=sport).order_by('-captian__user__date_joined')
     users = UserProfile.objects.all()
-    sports = ['All', 'Athletics', 'Badminton', 'Basketball', 'Cricket', 'Football',
-              'Table Tenis', 'Lawn Tenis', 'Volleyball','Kabaddi','Hockey','Squash',
-              'Chess','BGMI','Valorant','Clash Royale']
+   
 
     categories = ["men", "women", "mixed", "open"]
 

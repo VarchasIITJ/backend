@@ -4,8 +4,10 @@
 <form action="{% url 'adminportal:dteams' %}" method="post">
     {% csrf_token %}
     <select name="sport" id="">
+        <option value="">Select Sports</option>
         {% for sport in sports%}
-        <option value="{{forloop.counter0}}" {% if sport_select == forloop.counter0 %}selected {% endif %}>{{sport}}
+        <option value="{{sport}}" {% if sport_select == sport %}selected {% endif %}>
+            {{sport}}
         </option>
         {% endfor %}
     </select>
