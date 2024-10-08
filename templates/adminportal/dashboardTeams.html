@@ -9,6 +9,26 @@
         </option>
         {% endfor %}
     </select>
+
+    <select name="category" id="">
+        <option value="">Select Category</option>
+        {% for category in categoryOptions %}
+        <option value="{{ category }}" {% if category_select == category %}selected{% endif %}>
+            {{ category }}
+        </option>
+        {% endfor %}
+    </select>
+
+    <select name="team_type" id="team-type-filter">
+        <option value="">Select Team Type</option>
+        {% for type in teamTypeOptions %}
+        <option value="{{ type }}" {% if team_type_select == type %}selected{% endif %}>
+            {{ type }}
+        </option>
+        {% endfor %}
+    </select>
+
+    
     <input type="submit" value="Filter" class="btn btn-primary" style="margin: 4px;">
 </form>
 <table class="table table-bordered">
@@ -16,8 +36,8 @@
         <tr>
             <th><b>Team Name</b></th>
             <th><b>Sport</b></th>
-            <!-- <th><b>Category</b></th>
-                    <th><b>Event</b></th> -->
+            <th><b>Category</b></th>
+            <th><b>Event</b></th>
             <th><b>Captain</b></th>
             <th><b>College</b></th>
             <th><b>Captain no.</b></th>
@@ -29,8 +49,8 @@
         <tr>
             <td>{{ team }}</td>
             <td>{{ team.get_sport_display }}</td>
-            <!-- <td>{{team.category}}</td>
-                    <td>{{team.teams}}</td> -->
+            <td>{{team.category}}</td>
+            <td>{{team.teams}}</td>
             <td>{{ team.captian.user.first_name }}</td>
             <td>{{ team.college }}</td>
             <td>{{ team.captian.phone }}</td>

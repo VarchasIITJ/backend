@@ -24,19 +24,45 @@ def dashboard(request):
     return render(request, 'adminportal/dashboard.html', context)
 
 @login_required(login_url='login')
-def dashboardTeams(request, sport=0):
+def dashboardTeams(request, sport=0 ,category=0,team_type=0):
     if not request.user.is_staff:
         return render(request, "404")
     if request.method == 'POST':
+        print(request.POST)
         sport = request.POST.get('sport')
-    if sport == 0 or sport == '0':
-        teams = TeamRegistration.objects.all()
-    else:
-        teams = TeamRegistration.objects.filter(sport=sport).order_by('-captian__user__date_joined')
+        category = request.POST.get('category')
+        team_type = request.POST.get('team_type')
+    
+    teams = TeamRegistration.objects.all()
+
+    if sport != '0' and sport != 0:  # Filter by sport if it's not '0' (which is 'All')
+        teams = teams.filter(sport=sport)
+
+    if category:  # Filter by category if provided
+        teams = teams.filter(category=category)
+    
+    teams = teams.order_by('-captian__user__date_joined')
+
+    if team_type:  # Filter by team type if provided
+        teams = teams.filter(teams=team_type)
+
+    # Sort by captain's date joined
+    teams = teams.order_by('-captian__user__date_joined')
+
+    # else:
+    #     teams = TeamRegistration.objects.filter(sport=sport).order_by('-captian__user__date_joined')
     users = UserProfile.objects.all()
     sports = ['All', 'Athletics', 'Badminton', 'Basketball', 'Cricket', 'Football',
               'Table Tenis', 'Lawn Tenis', 'Volleyball','Kabaddi','Hockey','Squash',
               'Chess','BGMI','Valorant','Clash Royale']
+
+    categories = ["men", "women", "mixed", "open"]
+
+    # payment_status=["Not Paid","Accommodation Done",]
+
+    events = ["100m", "200m", "400m", "800m", "1500m", "5000m", "4x100m",
+             "4x400m", "Team", "Individual", "Long Jump", "Triple Jump",
+             "High Jump", "Discuss Throw", "Javelin Throw", "Shot Put"]
 
     # members = {}
     # for team in teams:
@@ -45,7 +71,7 @@ def dashboardTeams(request, sport=0):
             # if user.teamId == team:
                 # member.append(user.user.first_name)
         # members[team.teamId] = (len(member))
-    return render(request, 'adminportal/dashboardTeams.html', {'teams': teams, 'users': users, 'sports': sports, 'sport_select': sport})
+    return render(request, 'adminportal/dashboardTeams.html', {'teams': teams, 'users': users, 'sports': sports,'category_select':category,'team_type_select':team_type,'teamTypeOptions':events,'sport_select': sport,'categoryOptions':categories})
 
 
 def updateScore(request, sport=0):
@@ -58,6 +84,8 @@ def updateScore(request, sport=0):
     sports = ['All', 'Athletics', 'Badminton', 'Basketball', 'Cricket', 'Football',
               'Table Tennis', 'Lawn Tennis', 'Volleyball', 'Kabaddi', 'Hockey', 'Squash',
               'Chess', 'BGMI', 'Valorant', 'Clash Royale']
+   
+    
     if request.method == 'POST':
         teamId = request.POST.get('teamId')
         team = TeamRegistration.objects.get(teamId=teamId)
