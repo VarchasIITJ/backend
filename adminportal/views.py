@@ -37,14 +37,15 @@ def dashboardTeams(request, sport=0):
     sports = ['All', 'Athletics', 'Badminton', 'Basketball', 'Cricket', 'Football',
               'Table Tenis', 'Lawn Tenis', 'Volleyball','Kabaddi','Hockey','Squash',
               'Chess','BGMI','Valorant','Clash Royale']
-    members = {}
-    for team in teams:
-        member = []
-        for user in users:
-            if user.teamId == team:
-                member.append(user.user.first_name)
-        members[team.teamId] = (len(member))
-    return render(request, 'adminportal/dashboardTeams.html', {'teams': teams, 'users': users, 'members': members, 'sports': sports, 'sport_select': sport})
+
+    # members = {}
+    # for team in teams:
+        # member = []
+        # for user in users:
+            # if user.teamId == team:
+                # member.append(user.user.first_name)
+        # members[team.teamId] = (len(member))
+    return render(request, 'adminportal/dashboardTeams.html', {'teams': teams, 'users': users, 'sports': sports, 'sport_select': sport})
 
 
 def updateScore(request, sport=0):

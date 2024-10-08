@@ -1,45 +1,48 @@
 {% extends 'adminportal/base.html' %}
 {% load static %}
 {% block body %}
-        <form action="{% url 'adminportal:dteams' %}" method="post">
-            {% csrf_token %}
-            <select name="sport" id="">
-            {% for sport in sports%}
-                <option value="{{forloop.counter0}}" {% if sport_select == forloop.counter0 %}selected {% endif %}>{{sport}}</option>
-            {% endfor %}
-            </select>
-            <input type="submit" value="Filter" class="btn btn-primary" style="margin: 4px;">
-        </form>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th><b>Team Name</b></th>
-                    <th><b>Sport</b></th>
-                    <!-- <th><b>Category</b></th>
+<form action="{% url 'adminportal:dteams' %}" method="post">
+    {% csrf_token %}
+    <select name="sport" id="">
+        {% for sport in sports%}
+        <option value="{{forloop.counter0}}" {% if sport_select == forloop.counter0 %}selected {% endif %}>{{sport}}
+        </option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Filter" class="btn btn-primary" style="margin: 4px;">
+</form>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th><b>Team Name</b></th>
+            <th><b>Sport</b></th>
+            <!-- <th><b>Category</b></th>
                     <th><b>Event</b></th> -->
-                    <th><b>Captain</b></th>
-                    <th><b>College</b></th>
-                    <th><b>Captain no.</b></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for team in teams %}
-                <tr>
-                    <td>{{ team }}</td>
-                    <td>{{ team.get_sport_display }}</td>
-                    <!-- <td>{{team.category}}</td>
+            <th><b>Captain</b></th>
+            <th><b>College</b></th>
+            <th><b>Captain no.</b></th>
+            <th><b>Payment Status</b></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in teams %}
+        <tr>
+            <td>{{ team }}</td>
+            <td>{{ team.get_sport_display }}</td>
+            <!-- <td>{{team.category}}</td>
                     <td>{{team.teams}}</td> -->
-                    <td>{{ team.captian.user.first_name }}</td>
-                    <td>{{ team.college }}</td>
-                    <td>{{ team.captian.phone }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        
-    <br>
-    <a href="{% url 'adminportal:dashboard' %}">Go Back</a>
-    </div>
-    {% endblock %}
+            <td>{{ team.captian.user.first_name }}</td>
+            <td>{{ team.college }}</td>
+            <td>{{ team.captian.phone }}</td>
+            <td>{{team.get_payment_status_display}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-    {# {% for user in users %} {% if user.teamId == team %} {{user.user.first_name}} <br> {% endif %} {% endfor %} #}
+<br>
+<a href="{% url 'adminportal:dashboard' %}">Go Back</a>
+</div>
+{% endblock %}
+
+{# {% for user in users %} {% if user.teamId == team %} {{user.user.first_name}} <br> {% endif %} {% endfor %} #}
