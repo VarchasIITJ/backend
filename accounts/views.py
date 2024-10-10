@@ -413,7 +413,7 @@ def userDisplayProfile(request):
     if user.accommodation_required == "Y":
         
         has_accom_payment = any(
-            team.payment_status in ['3', '4']  
+            team.payment_status in ['2', '4']  
             for team in TeamRegistration.objects.filter(teamId__in=team_ids) 
         )
         accom_payment = "Yes" if has_accom_payment else "No"
@@ -433,6 +433,32 @@ def userDisplayProfile(request):
             
          }
     return Response(response_data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+def sendEmailToAllParticipants(request):
+    users = UserProfile.objects.all()
+
+    file_path = os.path.join('particpant_emails', 'accom_paid.txt')
+
+
+    with open(file_path, 'w') as file:
+        for user in users:
+            for team in user.teamId.all():
+                if team.payment_status in ['2', '4']:
+                    # subject = 'Varchas24 | Cancellation of all Informal Events'
+                    # message = f'Hi {user.user.first_name}, Thank you for being part of Varchas24. All the informal events are cancelled.'
+                    # email_from = settings.EMAIL_HOST_USER
+                    # recipient_list = [user.user.email]
+                    # send_mail(subject, message, email_from, recipient_list)
+                    file.write(f'{user.user.email}\n')
+                
+                    break
+            
+    return JsonResponse({"message": "All emails successfully saved."}, status=200)
+
+
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
