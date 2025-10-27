@@ -13,6 +13,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = ['*']
 
+APPEND_SLASH = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -32,13 +34,14 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'rest_framework',
     'app_apis',
+    'referees',
     'corsheaders',
     'rest_framework_simplejwt',
     'dbbackup'
 ]
 
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
-DBBACKUP_STORAGE_OPTIONS = {'location': '/home/chinmay/backend/backup/'}
+DBBACKUP_STORAGE_OPTIONS = {'location': '/home/backend/backup/'}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,19 +58,20 @@ MIDDLEWARE = [
 
 CSRF_TRUSTED_ORIGINS=[
     "http://localhost:3000",
-    "https://apivarchas24.in"
+    "https://apivarchas24.in",
+    "https://api.varchas.me"
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  "https://www.varchas24.in"
+    "http://localhost:3000",  "https://varchas.iitj.ac.in"
 ]
 
 
 
-ROOT_URLCONF = 'varchas_iitj.urls'
+ROOT_URLCONF = 'varchas_iitj.urls' 
 
 SIMPLE_JWT = {
-     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=50),
+     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
      'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
      'ROTATE_REFRESH_TOKENS': False,
      'BLACKLIST_AFTER_ROTATION': True
@@ -127,7 +131,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/'
+MEDIA_URL = '/media/'
 
 # CKEditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -187,13 +191,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = os.getenv('EMAIL_ID')
 EMAIL_HOST_PASSWORD=os.getenv('APP_PASSWORD')
-EMAIL_PORT = os.getenv('PORT_NUM')
+EMAIL_PORT = int(os.getenv('PORT_NUM', 587))  # default to 587 if not set
 EMAIL_USE_TLS = True
 
 
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

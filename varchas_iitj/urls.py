@@ -20,11 +20,12 @@ from django.conf.urls.static import static
 from accounts.views import CustomLoginView
 from django.contrib.auth.views import LogoutView
 from django.conf.urls import handler404, handler500
-from main.views import error_404, error_500
+from main.views import error_404, error_500, pr_data, get_users_data, get_teams_data, get_allowed_users_data, download_users_csv, download_teams_csv, download_allowed_csv
+
 # from django.conf.urls import url
 from django.urls import re_path 
 urlpatterns = [
-    path('webd', admin.site.urls, name='admin'),
+    path('webd/', admin.site.urls, name='admin'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('admin/', include('adminportal.urls')),
@@ -34,6 +35,14 @@ urlpatterns = [
     path('registration/', include('registration.urls')),
     path('sponsors/', include('sponsors.urls')),
     path('app_apis/', include('app_apis.urls')),
+    path('referees/', include('referees.urls')),
+    path('pr/', pr_data, name='pr_data'),
+    path('pr/api/users/', get_users_data, name='get_users_data'),
+    path('pr/api/teams/', get_teams_data, name='get_teams_data'),
+    path('pr/api/allowed/', get_allowed_users_data, name='get_allowed_users_data'),
+    path('pr/download/users/', download_users_csv, name='download_users_csv'),
+    path('pr/download/teams/', download_teams_csv, name='download_teams_csv'),
+    path('pr/download/allowed/', download_allowed_csv, name='download_allowed_csv'),
     re_path(r'^', include('django.contrib.auth.urls')),
 ]
 
@@ -41,5 +50,5 @@ handler404 = error_404
 handler500 = error_500
 urlpatterns += static(settings.STATIC_URL,
                       document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL,
-                      document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
