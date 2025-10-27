@@ -23,6 +23,10 @@ class UserProfile(models.Model):
         ('N', 'No'),
         ('Y', 'Yes'),
     )
+    ACCOMMODATION_PAID = (
+        ('1', 'Not Paid'),
+        ('2', 'Paid'),
+    )
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -73,18 +77,19 @@ class UserProfile(models.Model):
         ('36', 'Puducherry'),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    uniqueId = models.CharField(max_length=20, blank=True)
     phone = models.CharField(max_length=11, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
     college = models.CharField(max_length=128, blank=True)
     state = models.CharField(max_length=2, choices=STATE_CHOICES, blank=True)
     accommodation_required = models.CharField(max_length=1, choices=ACCOMMODATION_CHOICES, blank=True)
-    accomodation_type = models.CharField(max_length=1, default=1,  blank=True)
+    accommodation_paid = models.CharField(max_length=1, choices=ACCOMMODATION_PAID, blank=True, default='1')
     amount_required = models.PositiveSmallIntegerField(default=0, blank=True)
     amount_paid = models.PositiveSmallIntegerField(default=0, blank=True)
     no_of_days = models.CharField(max_length=1, choices=DAYS_CHOICES,blank=True)
     id_issued = models.BooleanField(default=False)
     qr_code = models.ImageField(upload_to='qr_code', blank=True, null=True)
-    teamId = models.ManyToManyField("registration.TeamRegistration", null=True, related_name="member",blank=True)
+    teamId = models.ManyToManyField("registration.TeamRegistration", blank=True, related_name="member",) 
     isesports=models.BooleanField(default=False)
     team_member1_cr_ingame_id = models.CharField(max_length=128, blank=True, null=True)
     team_member1_bgmi_ingame_id = models.CharField(max_length=128, blank=True, null=True)
