@@ -48,16 +48,16 @@ def dashboardTeams(request,sport=None,category=None,team_type=None):
     if category:  # Filter by category if provided
         teams = teams.filter(category=category)
     
-    teams = teams.order_by('-captian__user__date_joined')
+    teams = teams.order_by('-captain__user__date_joined')
 
     if team_type:  # Filter by team type if provided
         teams = teams.filter(teams=team_type)
 
     # Sort by captain's date joined
-    teams = teams.order_by('-captian__user__date_joined')
+    teams = teams.order_by('-captain__user__date_joined')
 
     # else:
-    #     teams = TeamRegistration.objects.filter(sport=sport).order_by('-captian__user__date_joined')
+    #     teams = TeamRegistration.objects.filter(sport=sport).order_by('-captain__user__date_joined')
     users = UserProfile.objects.all()
    
 
@@ -120,18 +120,18 @@ def updateScore(request, sport=0):
 #     if request.method == 'POST':
 #         sport = request.POST.get('sport')
 #     if sport == 0 or sport == '0':
-#         teams = EsportsTeamRegistration.objects.all().order_by('-captian__user__date_joined')
+#         teams = EsportsTeamRegistration.objects.all().order_by('-captain__user__date_joined')
 #     elif sport == '4':
 #         teams = EsportsTeamRegistration.objects.all().exclude(college__iexact='IITJ').exclude(
-#             college__iexact='IIT Jodhpur').order_by('-captian__user__date_joined')
+#             college__iexact='IIT Jodhpur').order_by('-captain__user__date_joined')
 #     else:
-#         teams = EsportsTeamRegistration.objects.filter(sport=sport).order_by('-captian__user__date_joined')
+#         teams = EsportsTeamRegistration.objects.filter(sport=sport).order_by('-captain__user__date_joined')
 #     users = EsportsUserProfile.objects.all()
 #     sports = ['All', 'Valorant', 'BGMI', 'Chess', 'Exclude IITJ']
 #     members = {}
 #     for team in teams:
-#         member = [team.captian.team_member2, team.captian.team_member3,
-#                   team.captian.team_member4, team.captian.team_member5, team.captian.team_member6]
+#         member = [team.captain.team_member2, team.captain.team_member3,
+#                   team.captain.team_member4, team.captain.team_member5, team.captain.team_member6]
 #         lenmember = 0
 #         for i in member:
 #             if (i != None):
@@ -161,10 +161,10 @@ def downloadExcel(request):
     for col_num in range(len(columns)):
         ws.write(row_num, col_num, columns[col_num], font_style)
     font_style = xlwt.XFStyle()
-    teams = TeamRegistration.objects.all().order_by('-captian__user__date_joined')
+    teams = TeamRegistration.objects.all().order_by('-captain__user__date_joined')
     # users = UserProfile.objects.all()
     for team in teams:
-        if team.captian != None:
+        if team.captain != None:
             team_members = []
             # for user in users:
             #     if user.teamId.filter(teamId=team.teamId).exists():
@@ -176,8 +176,8 @@ def downloadExcel(request):
             ws.write(row_num, 1, team.get_sport_display(), font_style)
             ws.write(row_num, 2, team.category, font_style)
             ws.write(row_num, 3, team.teams, font_style)
-            ws.write(row_num, 4, team.captian.user.first_name, font_style)
-            ws.write(row_num, 5, team.captian.phone, font_style)
+            ws.write(row_num, 4, team.captain.user.first_name, font_style)
+            ws.write(row_num, 5, team.captain.phone, font_style)
             ws.write(row_num, 6, team.college, font_style)
             ws.write(row_num,7,team.get_payment_status_display(),font_style)
             # ws.write(row_num, 8, members, font_style)
@@ -221,51 +221,51 @@ def downloadExcel(request):
 #     for col_num in range(len(columns)):
 #         ws.write(row_num, col_num, columns[col_num], font_style)
 #     font_style = xlwt.XFStyle()
-#     teams = EsportsTeamRegistration.objects.all().order_by('-captian__user__date_joined')
+#     teams = EsportsTeamRegistration.objects.all().order_by('-captain__user__date_joined')
 #     users = EsportsUserProfile.objects.all()
 #     for team in teams:
-#         if team.captian != None:
+#         if team.captain != None:
 #             members = []
 #             membersRank = []
 #             membersId = []
-#             if team.captian.team_member2 != None:
-#                 members.append(team.captian.team_member2)
-#                 if team.captian.team_member2_rank != None:
-#                     membersRank.append(team.captian.team_member2_rank)
-#                 if team.captian.team_member2_ingame_id != None:
-#                     membersId.append(team.captian.team_member2_ingame_id)
-#             if team.captian.team_member3 != None:
-#                 members.append(team.captian.team_member3)
-#                 if team.captian.team_member3_rank != None:
-#                     membersRank.append(team.captian.team_member3_rank)
-#                 if team.captian.team_member3_ingame_id != None:
-#                     membersId.append(team.captian.team_member3_ingame_id)
-#             if team.captian.team_member4 != None:
-#                 members.append(team.captian.team_member4)
-#                 if team.captian.team_member4_rank != None:
-#                     membersRank.append(team.captian.team_member4_rank)
-#                 if team.captian.team_member4_ingame_id != None:
-#                     membersId.append(team.captian.team_member4_ingame_id)
-#             if team.captian.team_member5 != None:
-#                 members.append(team.captian.team_member5)
-#                 if team.captian.team_member5_rank != None:
-#                     membersRank.append(team.captian.team_member5_rank)
-#                 if team.captian.team_member5_ingame_id != None:
-#                     membersId.append(team.captian.team_member5_ingame_id)
-#             if team.captian.team_member6 != None:
-#                 members.append(team.captian.team_member6)
-#                 if team.captian.team_member6_rank != None:
-#                     membersRank.append(team.captian.team_member6_rank)
-#                 if team.captian.team_member6_ingame_id != None:
-#                     membersId.append(team.captian.team_member6_ingame_id)
+#             if team.captain.team_member2 != None:
+#                 members.append(team.captain.team_member2)
+#                 if team.captain.team_member2_rank != None:
+#                     membersRank.append(team.captain.team_member2_rank)
+#                 if team.captain.team_member2_ingame_id != None:
+#                     membersId.append(team.captain.team_member2_ingame_id)
+#             if team.captain.team_member3 != None:
+#                 members.append(team.captain.team_member3)
+#                 if team.captain.team_member3_rank != None:
+#                     membersRank.append(team.captain.team_member3_rank)
+#                 if team.captain.team_member3_ingame_id != None:
+#                     membersId.append(team.captain.team_member3_ingame_id)
+#             if team.captain.team_member4 != None:
+#                 members.append(team.captain.team_member4)
+#                 if team.captain.team_member4_rank != None:
+#                     membersRank.append(team.captain.team_member4_rank)
+#                 if team.captain.team_member4_ingame_id != None:
+#                     membersId.append(team.captain.team_member4_ingame_id)
+#             if team.captain.team_member5 != None:
+#                 members.append(team.captain.team_member5)
+#                 if team.captain.team_member5_rank != None:
+#                     membersRank.append(team.captain.team_member5_rank)
+#                 if team.captain.team_member5_ingame_id != None:
+#                     membersId.append(team.captain.team_member5_ingame_id)
+#             if team.captain.team_member6 != None:
+#                 members.append(team.captain.team_member6)
+#                 if team.captain.team_member6_rank != None:
+#                     membersRank.append(team.captain.team_member6_rank)
+#                 if team.captain.team_member6_ingame_id != None:
+#                     membersId.append(team.captain.team_member6_ingame_id)
 #             row_num = row_num + 1
 #             ws.write(row_num, 0, team.teamId, font_style)
 #             ws.write(row_num, 1, team.get_sport_display(), font_style)
-#             ws.write(row_num, 2, team.captian.user.first_name, font_style)
-#             ws.write(row_num, 3, team.captian.phone, font_style)
+#             ws.write(row_num, 2, team.captain.user.first_name, font_style)
+#             ws.write(row_num, 3, team.captain.phone, font_style)
 #             ws.write(row_num, 4, team.college, font_style)
 #             ws.write(row_num, 5, ", ".join(members), font_style)
-#             ws.write(row_num, 6, str(team.captian.user.date_joined)[:11])
+#             ws.write(row_num, 6, str(team.captain.user.date_joined)[:11])
 #             ws.write(row_num, 7, ", ".join(membersRank), font_style)
 #             ws.write(row_num, 8, ", ".join(membersId), font_style)
 
@@ -304,15 +304,15 @@ class sendMail(CreateView):
             teams = TeamRegistration.objects.all()
             for team in teams:
                 if int(team.sport) == int(data['recipient']):
-                    recipient.append(team.captian.user.email)
+                    recipient.append(team.captain.user.email)
         elif int(data['recipient']) == 10:
             teams = TeamRegistration.objects.all()
             for team in teams:
-                if team.captian:
+                if team.captain:
                     message = '''<!DOCTYPE html> <html><body><p>{}</p>
                               <h3>{}</h3></body></html>'''.format(data['message'], "Your Team ID:" + team.teamId)
                     send_mail(data['subject'], message, 'noreply@varchas22.in',
-                              [team.captian.user.email], fail_silently=False, html_message=message)
+                              [team.captain.user.email], fail_silently=False, html_message=message)
             return super(sendMail, self).form_valid(form)
         else:
             users = UserProfile.objects.all()
