@@ -3,7 +3,8 @@ from .models import UserProfile,PasswordResetRequest
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from registration.models import TeamRegistration
-from django.contrib.auth.models import User, Group
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from rest_framework import viewsets,permissions,generics
 from .serializers import UserSerializer, GroupSerializer,UserProfileSerializer,UserProfileSerailizerForPR
 from rest_framework.views import APIView
@@ -24,10 +25,11 @@ from django.http import JsonResponse
 from django.contrib.auth import login
 from google.oauth2 import id_token
 from google.auth.transport import requests
-from .models import User, UserProfile
+from .models import UserProfile
 import os
 
 import sys
+User = get_user_model()
 
 # api method to register the user 
 
@@ -92,28 +94,36 @@ class RegisterUserView(APIView):
 def LoginUserView(request):
     email = request.data.get('email')
     password = request.data.get('password')
+
+    print("Login attempt for email:", email)
+    print("Login attempt for password:", password)
     
-    user = User.objects.filter(email=email).first()
+    user = User.objects.filter(username=email).first()
+    print(user)
     
     if user is None:
         return Response({"message": 'User not found!'}, status=status.HTTP_404_NOT_FOUND)
     userProfile=UserProfile.objects.filter(user=user).first()
+    print(userProfile)
     
     if userProfile is None:
-        print("hello")
-        return Response({"message":'User Profile not created'},status=status.HTTP_404_NOT_FOUND)
-
+        
+        return Response({
+            "message":'User Profile not created',
+            "profile_required": True
+        }, status=status.HTTP_200_OK)
     
     
     if not user.check_password(password):
         return Response({"message": 'Invalid Password or Email'}, status=status.HTTP_400_BAD_REQUEST)
 
     # Generate a JWT token
+    uniqueId=userProfile.uniqueId if userProfile else None
     refresh = RefreshToken.for_user(user)   
     access_token = str(refresh.access_token)
     refresh_token = str(refresh)  # Extract the refresh token value
 
-    return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
+    return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token, "profile_required": False, "uniqueId": uniqueId}, status=status.HTTP_200_OK)
 
 # API to edit user profile
 @api_view(['PUT'])
@@ -200,12 +210,30 @@ class UpdateUserInfoView(APIView):
         user.last_name = request.data["last_name"]
         user.save()
 
+        first_name = request.data.get('first_name', '').strip().upper()
+        last_name = request.data.get('last_name', '').strip().upper()
+        college = request.data.get('college', '').strip().upper()
+
+        initials_name = first_name[:3] if len(first_name) >= 3 else first_name
+        initials_surname = last_name[:3] if len(last_name) >= 3 else last_name
+        initials_college = college[:3] if len(college) >= 3 else college
+
+        prefix = "VAR25"
+
+        # Generate uniqueID inline (no helper function)
+        uniqueId = f"{prefix}-{initials_name}-{initials_college}-{random.randint(1000, 9999)}"
+
+        # Ensure uniqueId uniqueness
+        while UserProfile.objects.filter(uniqueId=uniqueId).exists():
+            uniqueId = f"{prefix}-{initials_surname}-{initials_college}-{random.randint(1000, 9999)}"
+
         profile_data = {
                 "user": user.id,
                 "phone": request.data["phone"],
                 "gender": request.data["gender"],
                 "college": request.data["college"],
                 "state": request.data["state"],
+                "uniqueId": uniqueId,
                 "accommodation_required": request.data["accommodation_required"],
             }
 
@@ -215,7 +243,7 @@ class UpdateUserInfoView(APIView):
 
         if profile_serializer.is_valid():
                 profile_serializer.save()
-                return Response({"message": 'Profile Updated Successfully'}, status=status.HTTP_201_CREATED)
+                return Response({"message": 'Profile Updated Successfully', "uniqueId": uniqueId}, status=status.HTTP_201_CREATED)
         else:
             user.delete()
             print("Profile serializer errors:", profile_serializer.errors)  # Log profile serializer errors
@@ -307,54 +335,138 @@ def restpassword(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def userleaveTeam(request):
-    user = get_object_or_404(UserProfile, user=request.user)
-    teamId = user.teamId
-    team = get_object_or_404(TeamRegistration, teamId=teamId)
-    user.teamId = None
-    user.save()
-    team.delete()
-    return Response({"message": "You have left the team successfully."}, status=status.HTTP_200_OK)
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    team_id = request.data.get('teamId')  # User must specify which team to leave
+
+    if not team_id:
+        return Response({"message": "teamId is required to leave a team."},
+                        status=400)
+
+    team = get_object_or_404(TeamRegistration, teamId=team_id)
+
+    # Prevent captain from leaving their own team
+    if user_profile == team.captain:
+        return Response({"message": "Captain cannot leave their own team. Transfer captainship or remove the team instead."},
+                        status=403)
+
+    # Check if user is actually a member of this team
+    if not team.member.filter(id=user_profile.id).exists():
+        return Response({"message": "You are not a member of this team."},
+                        status=400)
+
+    # Remove user from team
+    user_profile.teamId.remove(team)
+    team.teamcount = max(team.teamcount - 1, 0)
+    team.save()
+
+    return Response({"message": f"You have successfully left the team {team.teamId}."},
+                    status=200)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def userjoinTeam(request):
     user = request.user
-    teamId = request.data.get('teamId')
-    if user is not None:
-        user = get_object_or_404(UserProfile, user=user)
-        team = get_object_or_404(TeamRegistration, teamId=teamId)
-        sport = team.sport
-        sport_info = int(sport) 
-        if user.teamId.exists():
-            if sport_info in [1,2,3,4,5,6,7,8,9,10,11,12] :
-                teams=user.teamId.all()
-                for team in teams:
-                    if int(team.sport) in [1,2,3,4,5,6,7,8,9,10,11,12] :
-                        message = "You are not able to join this team"
-                        message += "\nYou have to register again to join another team. \nContact Varchas administrators."
-                        return Response({"message": message}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    if not user:
+        return Response({"message": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
+
+    user_profile = get_object_or_404(UserProfile, user=user)
+    team_id = request.data.get('teamId')
+    if not team_id:
+        return Response({"message": "teamId is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+    team = get_object_or_404(TeamRegistration, teamId=team_id)
+    sport_info = int(team.sport)
+    existing_teams = user_profile.teamId.all()
+
+    # --- Check if user already joined a team in the same sport/category ---
+    if sport_info == 1:  # Athletics
+        # User can join max 3 events
+        athletics_events_count = sum(
+            t.athletics_events.count() for t in existing_teams.filter(sport='1')
+        )
+        if athletics_events_count >= 3:
+            return Response(
+                {"message": "You can join a maximum of 3 Athletics events."},
+                status=status.HTTP_406_NOT_ACCEPTABLE
+            )
+
+        # Check if user already joined this sub-event
+        sub_event_names = [e.event_name for t in existing_teams.filter(sport='1') for e in t.athletics_events.all()]
+        for sub_event in team.athletics_events.all():
+            if sub_event.event_name in sub_event_names:
+                return Response(
+                    {"message": f"You are already registered for Athletics - {sub_event.event_name}."},
+                    status=status.HTTP_406_NOT_ACCEPTABLE
+                )
+
+    elif sport_info in range(2, 13):  # Normal sports
+        for t in existing_teams.filter(sport=str(sport_info)):
+            if t.category == team.category:
+                return Response(
+                    {"message": f"You are already registered in {team.get_sport_display()} for category {team.get_category_display()}."},
+                    status=status.HTTP_406_NOT_ACCEPTABLE
+                )
+
+    elif sport_info in [13, 14, 15]:  # Esports
+        if existing_teams.filter(sport=str(sport_info)).exists():
+            return Response(
+                {"message": f"You are already registered for {team.get_sport_display()}. Cannot join another team."},
+                status=status.HTTP_406_NOT_ACCEPTABLE
+            )
+
+    # --- Check team size ---
+    if team.teamcount >= team.teamsize:
+        return Response({"message": "Sorry, the team is full!"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
+    # --- Add user to the team ---
+    user_profile.teamId.add(team)
+    user_profile.save()
+
+    # Increment teamcount
+    team.teamcount += 1
+    team.save()
+
+    return Response({"message": f"Joined team {team.teamId} successfully!"}, status=status.HTTP_201_CREATED)
+
+# allowing user to join only one sport or one event.
+# def userjoinTeam(request):
+#     user = request.user
+#     teamId = request.data.get('teamId')
+#     if user is not None:
+#         user = get_object_or_404(UserProfile, user=user)
+#         team = get_object_or_404(TeamRegistration, teamId=teamId)
+#         sport = team.sport
+#         sport_info = int(sport) 
+#         if user.teamId.exists():
+#             if sport_info in [1,2,3,4,5,6,7,8,9,10,11,12] :
+#                 teams=user.teamId.all()
+#                 for team in teams:
+#                     if int(team.sport) in [1,2,3,4,5,6,7,8,9,10,11,12] :
+#                         message = "You are not able to join this team"
+#                         message += "\nYou have to register again to join another team. \nContact Varchas administrators."
+#                         return Response({"message": message}, status=status.HTTP_406_NOT_ACCEPTABLE)
         
-            if sport_info in [13,14,15]:
-                teams=user.teamId.all()
-                for team in teams:
-                    if int(team.sport) == sport_info :
-                        message = "You are not able to join this team"
-                        message += "\nYou have to register again to join another team. \nContact Varchas administrators."
-                        return Response({"message": message}, status=status.HTTP_406_NOT_ACCEPTABLE)
+#             if sport_info in [13,14,15]:
+#                 teams=user.teamId.all()
+#                 for team in teams:
+#                     if int(team.sport) == sport_info :
+#                         message = "You are not able to join this team"
+#                         message += "\nYou have to register again to join another team. \nContact Varchas administrators."
+#                         return Response({"message": message}, status=status.HTTP_406_NOT_ACCEPTABLE)
         
-        # if user.gender != team.captian.gender:
-        #     return Response({"message":"Sorry,Gender not matched!"},status=status.HTTP_406_NOT_ACCEPTABLE)
+#         # if user.gender != team.captain.gender:
+#         #     return Response({"message":"Sorry,Gender not matched!"},status=status.HTTP_406_NOT_ACCEPTABLE)
         
-        team = get_object_or_404(TeamRegistration, teamId=teamId)
-        if(int(team.teamcount) < int(team.teamsize)):
-            user.teamId.add(team)
-            user.save()
-            team.teamcount=team.teamcount+1
-            team.save()
-            return Response({"message": "Joined team Successfully!"}, status=status.HTTP_201_CREATED)
-        else:
-           return Response({"message":"Sorry,Team size exceeded!"},status=status.HTTP_406_NOT_ACCEPTABLE)
-    return Response({"message": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
+#         team = get_object_or_404(TeamRegistration, teamId=teamId)
+#         if(int(team.teamcount) < int(team.teamsize)):
+#             user.teamId.add(team)
+#             user.save()
+#             team.teamcount=team.teamcount+1
+#             team.save()
+#             return Response({"message": "Joined team Successfully!"}, status=status.HTTP_201_CREATED)
+#         else:
+#            return Response({"message":"Sorry,Team size exceeded!"},status=status.HTTP_406_NOT_ACCEPTABLE)
+#     return Response({"message": "User not found!"}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -362,46 +474,49 @@ def userDisplayteam(request):
     try:
         user_profile = get_object_or_404(UserProfile, user=request.user)
         team_data = []
+
         if user_profile.teamId.exists():
             teams = user_profile.teamId.all()
             for team in teams:
+                # Members of the team
                 team_users_info = [
                     {
-                        "user_id": user_data.user.id,
-                        "email": user_data.user.username,
-                        "phone": user_data.phone,
-                        "name": user_data.user.first_name + user_data.user.last_name
+                        "user_id": member.user.id,
+                        "email": member.user.email,
+                        "phone": member.phone,
+                        "name": f"{member.user.first_name} {member.user.last_name}".strip()
                     }
-                    for user_data in UserProfile.objects.filter(teamId=team)
+                    for member in UserProfile.objects.filter(teamId=team)
                 ]
+
+                # Athletics events (if applicable)
+                athletics_events = []
+                if team.sport == "1":  # Athletics
+                    athletics_events = [e.event_name for e in team.athletics_events.all()]
+
                 team_info = {
                     "team_id": team.teamId,
-                    "sport": team.sport,
+                    "sport": team.get_sport_display(),
                     "college": team.college,
-                    "captain_username": team.captian.user.first_name + team.captian.user.last_name if team.captian else None,
+                    "captain_name": f"{team.captain.user.first_name} {team.captain.user.last_name}".strip() if team.captain else None,
                     "score": team.score,
-                    "category": team.category,
-                    "players_info":team_users_info,
-                    "captain": team.captian==user_profile,
-                    "event":team.teams,
-                    "payment_information":team.get_payment_status_display(),
+                    "category": team.get_category_display(),
+                    "players_info": team_users_info,
+                    "captain": team.captain == user_profile,
+                    "athletics_events": athletics_events,  # empty list for non-athletics
+                    "payment_information": team.get_payment_status_display(),
                 }
-                
+
                 team_data.append(team_info)
-        
+
         if not team_data:
             return Response({"message": "Join a team"}, status=status.HTTP_404_NOT_FOUND)
-        
-        response_data = {
-            "team_data": team_data
-        }
-        
-        return Response(response_data, status=status.HTTP_200_OK)
-    
+
+        return Response({"team_data": team_data}, status=status.HTTP_200_OK)
+
     except Exception as e:
         return Response({"message": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-    
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def userDisplayProfile(request):
