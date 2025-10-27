@@ -41,13 +41,21 @@ Procedure:
   NOTE: If its your first time migrating, you may need to manually add migration module in each app.
   ```
   python manage.py makemigrations main
+  python manage.py migrate main
   python manage.py makemigrations accounts
+  python manage.py migrate accounts
   python manage.py makemigrations adminportal
+  python manage.py migrate adminportal
   python manage.py makemigrations events
-  python manage.py makemigrations registration
+  python manage.py migrate events
   python manage.py makemigrations sponsors
+  python manage.py migrate sponsors
+  python manage.py makemigrations referees
+  python manage.py migrate referees
   python manage.py makemigrations app_apis
-  python manage.py migrate
+  python manage.py migrate app_apis
+  python manage.py makemigrations registration
+  python manage.py migrate registration
   ```
 - Create a superuser
   ```
