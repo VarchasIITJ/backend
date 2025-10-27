@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PR Dashboard | Varchas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #f9fafb; }
+    .tab-btn { margin: 5px; }
+    table { background: white; border-radius: 10px; }
+    .download-btn { display: none; margin-top: 15px; }
+  </style>
+</head>
+<body class="p-4">
+  <div class="container">
+    <h2 class="mb-4">Admin Dashboard (PR)</h2>
+    <div>
+      <button class="btn btn-outline-primary tab-btn" onclick="loadTable('users')">Users</button>
+      <button class="btn btn-outline-primary tab-btn" onclick="loadTable('teams')">Teams</button>
+      <button class="btn btn-outline-primary tab-btn" onclick="loadTable('allowed')">Allowed Users</button>
+    </div>
+
+    <div id="table-container" class="mt-4"></div>
+    <a id="download-link" href="#" class="btn btn-success download-btn" target="_blank">Download CSV</a>
+  </div>
+
+  <script>
+    async function loadTable(type) {
+      const container = document.getElementById("table-container");
+      const link = document.getElementById("download-link");
+
+      container.innerHTML = "<p>Loading...</p>";
+      link.style.display = "none";
+
+      const response = await fetch(`/pr/api/${type}/`);
+      const data = await response.json();
+
+      if (!data.length) {
+        container.innerHTML = "<p>No data available.</p>";
+        return;
+      }
+
+      let table = '<table class="table table-striped table-bordered"><thead><tr>';
+      Object.keys(data[0]).forEach(key => table += `<th>${key}</th>`);
+      table += '</tr></thead><tbody>';
+      data.forEach(row => {
+        table += '<tr>';
+        Object.values(row).forEach(val => table += `<td>${val ?? ''}</td>`);
+        table += '</tr>';
+      });
+      table += '</tbody></table>';
+      container.innerHTML = table;
+
+      link.href = `/pr/download/${type}/`;
+      link.style.display = "inline-block";
+    }
+  </script>
+</body>
+</html>
