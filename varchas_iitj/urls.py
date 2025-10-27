@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from dango.http import HttpResponse
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -26,6 +27,7 @@ from main.views import error_404, error_500, pr_data, get_users_data, get_teams_
 from django.urls import re_path 
 urlpatterns = [
     path('webd/', admin.site.urls, name='admin'),
+    path('health/', lambda request: HttpResponse("Backend is running fine", status=200), name='health_check'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('admin/', include('adminportal.urls')),
