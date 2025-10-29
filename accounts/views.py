@@ -176,7 +176,7 @@ def google_signup(request):
         return Response({"message": 'User Logged in Successfully!', "access_token": access_token, "refresh_token": refresh_token}, status=status.HTTP_200_OK)
 
     except UserProfile.DoesNotExist:
-        return Response({"message": 'User Created now needs additional information'})
+        return Response({"message": 'User Created now needs additional information', "profile_required": True}, status=status.HTTP_200_OK)
 
 
     except User.DoesNotExist:
@@ -193,7 +193,7 @@ def google_signup(request):
         user.set_unusable_password()  # No password required for Google login
         user.save()
 
-        return Response({"message": 'User Created now needs additional information'}, status=status.HTTP_201_CREATED)
+        return Response({"message": 'User Created now needs additional information', "profile_required": True}, status=status.HTTP_201_CREATED)
 
 class UpdateUserInfoView(APIView):
     def put(self, request):

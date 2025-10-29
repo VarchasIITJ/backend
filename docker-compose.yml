@@ -13,7 +13,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - EMAIL_USE_TLS=True
     ports:
-      - 8888:8888
+      - 5000:5000
     volumes:
       - .:/app
     # depends_on:
@@ -25,13 +25,22 @@ services:
       - -c
       - |
         python manage.py makemigrations main
+        python manage.py migrate main
         python manage.py makemigrations accounts
-        python manage.py makemigrations adminportal
-        python manage.py makemigrations events
+        python manage.py migrate accounts
         python manage.py makemigrations registration
+        python manage.py migrate registration
+        python manage.py makemigrations adminportal
+        python manage.py migrate adminportal
+        python manage.py makemigrations events
+        python manage.py migrate events
         python manage.py makemigrations sponsors
-        python manage.py migrate
-        python manage.py runserver 0.0.0.0:8888
+        python manage.py migrate sponsors
+        python manage.py makemigrations referees
+        python manage.py migrate referees
+        python manage.py makemigrations app_apis
+        python manage.py migrate app_apis
+        python manage.py runserver 0.0.0.0:5000
         
   # postgresqldb:
   #   image: "bitnami/postgresql:latest"
