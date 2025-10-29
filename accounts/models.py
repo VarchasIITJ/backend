@@ -82,6 +82,11 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
     college = models.CharField(max_length=128, blank=True)
     state = models.CharField(max_length=2, choices=STATE_CHOICES, blank=True)
+
+    account_holder_name = models.CharField(max_length=100)
+    ifsc_code = models.CharField(max_length=11)
+    bank_account_number = models.CharField(max_length=20)
+    
     accommodation_required = models.CharField(max_length=1, choices=ACCOMMODATION_CHOICES, blank=True)
     accommodation_paid = models.CharField(max_length=1, choices=ACCOMMODATION_PAID, blank=True, default='1')
     amount_required = models.PositiveSmallIntegerField(default=0, blank=True)
