@@ -5,6 +5,11 @@ class Referee(models.Model):
     email = models.EmailField(max_length=254, unique=True)
     phone = models.CharField(max_length=11, blank=True)
     sport = models.CharField(max_length=50)
+    
+    account_holder_name = models.CharField(max_length=100)
+    ifsc_code = models.CharField(max_length=11)
+    bank_account_number = models.CharField(max_length=20)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
