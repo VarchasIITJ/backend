@@ -233,6 +233,9 @@ class UpdateUserInfoView(APIView):
                 "gender": request.data["gender"],
                 "college": request.data["college"],
                 "state": request.data["state"],
+                "account_holder_name": request.data["account_holder_name"],
+                "ifsc_code": request.data["ifsc_code"],
+                "bank_account_number": request.data["bank_account_number"],
                 "uniqueId": uniqueId,
                 "accommodation_required": request.data["accommodation_required"],
             }
