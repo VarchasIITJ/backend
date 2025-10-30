@@ -34,15 +34,26 @@ def CreateTeamView(request):
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # Input
-    sport = int(request.data.get('sport'))
+    # --- Input Data ---
+    sport_key = str(request.data.get('sport'))   # e.g. '1', '2', etc.
     categories = request.data.get('categories', [])
     teamsize_list = request.data.get('teamsize', [])
     teams_data = request.data.get('teams', [])
     team_id_data = request.data.get('team_id', {})
-    event_data = request.data.get('event_data', [])  # for esports in-game IDs
+    event_data = request.data.get('event_data', [])  # for esports / athletics sub-events
 
-    # Athletics sub-events
+    # --- SPORT_CHOICES Lookup ---
+    sport_dict = dict(TeamRegistration.SPORT_CHOICES)
+    if sport_key not in sport_dict:
+        return Response({"message": "Invalid sport choice."}, status=status.HTTP_400_BAD_REQUEST)
+
+    sport_name = sport_dict[sport_key]
+    spor = sport_name[:3]  # first 3 letters for team ID
+
+    # --- Convert to integer for conditional checks ---
+    sport = int(sport_key)
+
+    # --- Athletics sub-events ---
     track_single = [
         "100m", "200m", "400m", "800m", "1500m", "5000m",
         "Long Jump", "Triple Jump", "High Jump", "Discuss Throw", "Javelin Throw", "Shot Put"
@@ -75,7 +86,7 @@ def CreateTeamView(request):
     elif sport in range(2, 13):  # Normal sports
         for i, team_name in enumerate(teams_data):
             cat = categories[i]
-            for team in existing_teams.filter(sport=str(sport)):
+            for team in existing_teams.filter(sport=sport_key):
                 if team.category == cat:
                     return Response(
                         {"message": f"You are already registered for {team.get_sport_display()} - category {team.get_category_display()}."},
@@ -83,13 +94,13 @@ def CreateTeamView(request):
                     )
 
     elif sport in [13, 14, 15]:  # Esports
-        if existing_teams.filter(sport=str(sport)).exists():
+        if existing_teams.filter(sport=sport_key).exists():
+            existing_team = existing_teams.filter(sport=sport_key).first()
             return Response(
-                {"message": f"You are already registered for {existing_teams.filter(sport=str(sport)).first().get_sport_display()}."},
+                {"message": f"You are already registered for {existing_team.get_sport_display()}."},
                 status=status.HTTP_406_NOT_ACCEPTABLE
             )
 
-    spor = TeamRegistration.SPORT_CHOICES[sport - 1][1][:3]
     created_teams = []
 
     # --- Create teams ---
@@ -97,7 +108,7 @@ def CreateTeamView(request):
         category = categories[i]
         size = teamsize_list[i] if i < len(teamsize_list) else 1
 
-        # Generate team ID
+        # Generate Team ID
         if category == "X":  # Mixed
             team_id = f"V-{spor.upper()}-D-{team_name[:1].upper()}-{user.username[:3].upper()}-{randint(1,99)}-{randint(1,9)}"
         elif team_name in track_single:
@@ -107,10 +118,10 @@ def CreateTeamView(request):
         else:
             team_id = f"V-{spor.upper()}-{category[:1]}-{team_name[:1].upper()}-{user.username[:3].upper()}-{randint(1,99)}-{randint(1,9)}"
 
-        # Create TeamRegistration
+        # --- Create TeamRegistration ---
         team = TeamRegistration.objects.create(
             teamId=team_id,
-            sport=sport,
+            sport=sport_key,
             college=user_profile.college,
             captain=user_profile,
             score=-1,
@@ -123,7 +134,7 @@ def CreateTeamView(request):
         # Add captain to the team
         user_profile.teamId.add(team)
 
-        # --- Athletics-specific ---
+        # --- Athletics-specific sub-events ---
         if sport == 1:
             if i < len(event_data):
                 sub_event_name = event_data[i]
@@ -136,26 +147,22 @@ def CreateTeamView(request):
 
         # --- Esports in-game ID handling ---
         if sport in [13, 14, 15]:
-            # Set esports flag
             user_profile.isesports = True
 
-            # For BGMI
-            if sport == 13:
+            if sport == 13:  # BGMI
                 user_profile.team_member1_bgmi_ingame_id = team_id_data.get('id1')
                 user_profile.team_member2_bgmi_ingame_id = team_id_data.get('id2')
                 user_profile.team_member3_bgmi_ingame_id = team_id_data.get('id3')
                 user_profile.team_member4_bgmi_ingame_id = team_id_data.get('id4')
 
-            # For Valorant
-            elif sport == 14:
+            elif sport == 14:  # Valorant
                 user_profile.team_member1_val_ingame_id = team_id_data.get('id1')
                 user_profile.team_member2_val_ingame_id = team_id_data.get('id2')
                 user_profile.team_member3_val_ingame_id = team_id_data.get('id3')
                 user_profile.team_member4_val_ingame_id = team_id_data.get('id4')
                 user_profile.team_member5_val_ingame_id = team_id_data.get('id5')
 
-            # For Clash Royale
-            elif sport == 15:
+            elif sport == 15:  # Clash Royale
                 user_profile.team_member1_cr_ingame_id = team_id_data.get('id1')
 
             team.save()
@@ -164,11 +171,17 @@ def CreateTeamView(request):
         # --- Email confirmation ---
         subject = 'Varchas24 | Team Registration Confirmation'
         message = (
-            f"Hi {user.first_name}, your Team ID for {team.get_sport_display()} "
-            f"({team_name}) in category {team.get_category_display()} is {team_id}."
+            f"Hi {user.first_name},\n\n"
+            f"🎉 Congratulations! Your team has been successfully registered for *{team.get_sport_display()}*.\n\n"
+            f"🏷️ Team Name: {team_name}\n"
+            f"📂 Category: {team.get_category_display()}\n"
+            f"🆔 Team ID: {team_id}\n\n"
+            "Please keep this Team ID safe — you’ll need it for future reference.\n\n"
+            "Best regards,\n"
+            "Team Varchas24"
         )
-        send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
 
+        send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
         created_teams.append(team_id)
 
     return Response(
