@@ -524,32 +524,29 @@ def userDisplayteam(request):
 @permission_classes([IsAuthenticated])
 def userDisplayProfile(request):
     user = get_object_or_404(UserProfile, user=request.user)
-    if user is None:
-        return Response({"message":"User not found!"},status=status.HTTP_404_NOT_FOUND)
     
     team_ids = [team.teamId for team in user.teamId.all()] if user.teamId.exists() else None
+
     if user.accommodation_required == "Y":
-        
-        has_accom_payment = any(
-            team.payment_status in ['2', '4']  
-            for team in TeamRegistration.objects.filter(teamId__in=team_ids) 
-        )
-        accom_payment = "Yes" if has_accom_payment else "No"
+        if user.accommodation_paid == "2":
+            accom_payment = "Yes"
+        else:
+            accom_payment = "No"
     else:
         accom_payment = "NA"
 
     response_data = {
-                "team_id": [team.teamId for team in user.teamId.all()] if user.teamId.exists() else None,
-                "college": user.college,
-                "user_id": user.user.id,
-                "email": user.user.username,
-                "phone": user.phone,
-                "first_name":user.user.first_name,
-                "last_name":user.user.last_name,
-                "accomadation":user.accommodation_required,
-                "accomadation_payment":accom_payment
-            
-         }
+        "team_id": [team.teamId for team in user.teamId.all()] if user.teamId.exists() else None,
+        "college": user.college,
+        "user_id": user.user.id,
+        "email": user.user.username,
+        "phone": user.phone,
+        "first_name": user.user.first_name,
+        "last_name": user.user.last_name,
+        "accommodation": user.accommodation_required,
+        "accommodation_payment": accom_payment
+    }
+
     return Response(response_data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
