@@ -245,8 +245,30 @@ class UpdateUserInfoView(APIView):
         
 
         if profile_serializer.is_valid():
-                profile_serializer.save()
-                return Response({"message": 'Profile Updated Successfully', "uniqueId": uniqueId}, status=status.HTTP_201_CREATED)
+            profile_serializer.save()
+                        # --- Email confirmation ---
+            subject = 'Varchas25 | Registration Confirmation'
+            message = (
+                f"Hi {user.first_name},\n\n"
+                f"Congratulations! Your registration for Varchas 2025 has been successfully completed.\n\n"
+                f"Unique ID: {uniqueId}\n"
+                f"College: {request.data['college']}\n"
+                f"Phone: {request.data['phone']}\n\n"
+                "IMPORTANT:\n"
+                "You must strictly fill the following form to complete your registration:\n"
+                "Google Form: https://docs.google.com/forms/d/e/1FAIpQLSdWIu1JGUVuYJyzmDLEmmxsX29eq7G4RMkgD9fJNWb_sxFmUQ/viewform\n\n"
+                "Failure to fill this form may result in cancellation of your registration.\n\n"
+                "Please keep this Unique ID safe — you will need it for future verification and participation.\n\n"
+                "Best regards,\n"
+                "Team Varchas25"
+            )
+
+            try:
+                send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])
+            except Exception as e:
+                print(f"Error sending email: {e}")
+            
+            return Response({"message": 'Profile Updated Successfully', "uniqueId": uniqueId}, status=status.HTTP_201_CREATED)
         else:
             user.delete()
             print("Profile serializer errors:", profile_serializer.errors)  # Log profile serializer errors
